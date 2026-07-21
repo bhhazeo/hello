@@ -8,6 +8,7 @@ export default async function handler(req, res) {
   try {
     const { systemPrompt, messages } = req.body;
 
+    // Lấy API Key từ Environment Variables trên Vercel
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     
     const model = genAI.getGenerativeModel({
@@ -15,7 +16,7 @@ export default async function handler(req, res) {
       systemInstruction: systemPrompt,
     });
 
-    // Format lịch sử chat cho Gemini
+    // Format lịch sử tin nhắn cho Gemini
     const history = messages.slice(0, -1).map(m => ({
       role: m.role === 'assistant' ? 'model' : 'user',
       parts: [{ text: m.content }]

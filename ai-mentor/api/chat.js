@@ -5,7 +5,8 @@ export default async function handler(req, res) {
 
   try {
     const { systemPrompt, messages } = req.body;
-    const apiKey = process.env.GEMINI_API_KEY;
+    // Lấy Key Groq từ Vercel
+    const apiKey = process.env.GROQ_API_KEY || process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
       return res.status(500).json({ error: 'Chưa cấu hình API Key trên Vercel.' });
@@ -19,51 +20,31 @@ export default async function handler(req, res) {
       }))
     ];
 
-    // Danh sách model miễn phí dự phòng tự động
-    const freeModels = [
-      'google/gemini-2.0-flash-exp:free',
-      'deepseek/deepseek-r1:free',
-      'qwen/qwen-2.5-72b-instruct:free',
-      'meta-llama/llama-3.1-8b-instruct:free'
-    ];
+    // Gọi Groq API - Model Llama 3.3 70B cực mạnh & siêu nhanh
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: formattedMessages,
+        temperature: 0.7
+      })
+    });
 
-    let reply = null;
-    let lastError = null;
+    const data = await response.json();
 
-    for (const modelName of freeModels) {
-      try {
-        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${apiKey}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            model: modelName,
-            messages: formattedMessages
-          })
-        });
-
-        const data = await response.json();
-        if (response.ok && data.choices?.[0]?.message?.content) {
-          reply = data.choices[0].message.content;
-          break; // Tìm thấy model chạy OK là dừng ngay!
-        } else {
-          lastError = data.error?.message || 'Endpoint unavailable';
-        }
-      } catch (err) {
-        lastError = err.message;
-      }
+    if (!response.ok) {
+      throw new Error(data.error?.message || 'Lỗi kết nối Groq API');
     }
 
-    if (reply) {
-      return res.status(200).json({ reply });
-    } else {
-      throw new Error(lastError || 'Tất cả model miễn phí đều đang bận.');
-    }
+    const reply = data.choices[0].message.content;
+    return res.status(200).json({ reply });
 
   } catch (error) {
-    console.error('API Error:', error);
+    console.error('Groq API Error:', error);
     return res.status(500).json({ error: 'Không thể kết nối tới AI Mentor.' });
   }
 }

@@ -10,15 +10,16 @@ export default async function handler(req, res) {
 
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     
-    // ĐỔI SANG MODEL: gemini-1.5-flash
+    // Dùng alias chính thức 'gemini-flash' để Google tự điều hướng đến model ổn định nhất
     const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-flash',
+      model: 'gemini-flash',
       systemInstruction: systemPrompt,
     });
 
     const lastMessage = messages[messages.length - 1].content;
     let rawHistory = messages.slice(0, -1);
 
+    // Lọc bỏ lời chào AI đầu tiên để history bắt đầu bằng role 'user'
     if (rawHistory.length > 0 && rawHistory[0].role === 'assistant') {
       rawHistory = rawHistory.slice(1);
     }

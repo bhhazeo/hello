@@ -10,9 +10,9 @@ export default async function handler(req, res) {
 
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     
-    // ĐÃ ĐỔI: Sử dụng tên model chuẩn gemini-2.5-flash
+    // ĐỔI SANG MODEL CHUẨN: gemini-2.0-flash
     const model = genAI.getGenerativeModel({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-2.0-flash',
       systemInstruction: systemPrompt,
     });
 

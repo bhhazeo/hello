@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenAI } from '@google/genai';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -8,32 +8,41 @@ export default async function handler(req, res) {
   try {
     const { systemPrompt, messages } = req.body;
 
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    
-    // Dùng alias chính thức 'gemini-flash' để Google tự điều hướng đến model ổn định nhất
-    const model = genAI.getGenerativeModel({
-      model: 'gemini-flash',
-      systemInstruction: systemPrompt,
-    });
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
+    // 1. Tách câu hỏi mới nhất của người dùng
     const lastMessage = messages[messages.length - 1].content;
+
+    // 2. Lấy lịch sử chat
     let rawHistory = messages.slice(0, -1);
 
-    // Lọc bỏ lời chào AI đầu tiên để history bắt đầu bằng role 'user'
+    // Lọc bỏ tin nhắn chào ban đầu của AI nếu có
     if (rawHistory.length > 0 && rawHistory[0].role === 'assistant') {
       rawHistory = rawHistory.slice(1);
     }
 
-    const history = rawHistory.map(m => ({
-      role: m.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: m.content }]
-    }));
+    // 3. Format history chuẩn cho SDK mới
+    const contents = [
+      ...rawHistory.map(m => ({
+        role: m.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: m.content }]
+      })),
+      {
+        role: 'user',
+        parts: [{ text: lastMessage }]
+      }
+    ];
 
-    const chat = model.startChat({ history });
-    const result = await chat.sendMessage(lastMessage);
-    const response = await result.response;
+    // 4. Gọi Gemini API
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: contents,
+      config: {
+        systemInstruction: systemPrompt,
+      }
+    });
 
-    return res.status(200).json({ reply: response.text() });
+    return res.status(200).json({ reply: response.text });
   } catch (error) {
     console.error('Gemini API Error:', error);
     return res.status(500).json({ error: 'Không thể kết nối tới Bạn AI Mentor Nghề Nghiệp.' });

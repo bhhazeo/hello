@@ -10,29 +10,30 @@ export default async function handler(req, res) {
 
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     
+    // ĐÃ ĐỔI: Sử dụng tên model chuẩn gemini-2.5-flash
     const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-flash',
+      model: 'gemini-2.5-flash',
       systemInstruction: systemPrompt,
     });
 
-    // 1. Tách tin nhắn cuối cùng (câu hỏi hiện tại của người dùng)
+    // 1. Tách câu hỏi cuối cùng của người dùng
     const lastMessage = messages[messages.length - 1].content;
 
-    // 2. Lấy danh sách tin nhắn trước đó (trừ tin nhắn cuối)
+    // 2. Lọc lịch sử tin nhắn
     let rawHistory = messages.slice(0, -1);
 
-    // 3. Nếu tin nhắn đầu tiên là lời chào của AI, loại bỏ nó để history luôn bắt đầu bằng 'user'
+    // Bỏ lời chào mặc định của AI ở đầu để history bắt đầu bằng 'user'
     if (rawHistory.length > 0 && rawHistory[0].role === 'assistant') {
       rawHistory = rawHistory.slice(1);
     }
 
-    // 4. Định dạng lại history theo chuẩn của Gemini SDK
+    // 3. Format history chuẩn Gemini
     const history = rawHistory.map(m => ({
       role: m.role === 'assistant' ? 'model' : 'user',
       parts: [{ text: m.content }]
     }));
 
-    // 5. Khởi tạo phiên Chat và gửi câu hỏi
+    // 4. Khởi tạo chat và gửi câu hỏi
     const chat = model.startChat({ history });
     const result = await chat.sendMessage(lastMessage);
     const response = await result.response;

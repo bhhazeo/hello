@@ -1,4 +1,4 @@
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -8,30 +8,27 @@ export default async function handler(req, res) {
   try {
     const { systemPrompt, messages } = req.body;
 
-    // Lấy API Key an toàn từ cài đặt của Vercel
-    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    
+    const model = genAI.getGenerativeModel({
+      model: 'gemini-1.5-flash',
+      systemInstruction: systemPrompt,
+    });
 
-    // Đổi định dạng tin nhắn cho đúng với Gemini
+    // Format lịch sử chat cho Gemini
     const history = messages.slice(0, -1).map(m => ({
       role: m.role === 'assistant' ? 'model' : 'user',
       parts: [{ text: m.content }]
     }));
     const lastMessage = messages[messages.length - 1].content;
 
-    // Gọi Gemini 2.5 Flash
-    const chat = ai.chats.create({
-      model: 'gemini-2.5-flash',
-      config: {
-        systemInstruction: systemPrompt,
-      },
-      history: history
-    });
+    const chat = model.startChat({ history });
+    const result = await chat.sendMessage(lastMessage);
+    const response = await result.response;
 
-    const response = await chat.sendMessage({ message: lastMessage });
-
-    return res.status(200).json({ reply: response.text });
+    return res.status(200).json({ reply: response.text() });
   } catch (error) {
-    console.error('Lỗi API:', error);
-    return res.status(500).json({ error: 'Không thể kết nối tới Bạn AI Mentor.' });
+    console.error('Gemini API Error:', error);
+    return res.status(500).json({ error: 'Không thể kết nối tới Bạn AI Mentor Nghề Nghiệp.' });
   }
 }

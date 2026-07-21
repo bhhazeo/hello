@@ -1430,12 +1430,13 @@ function initAdvisor(){
     b.onclick=()=>{ $('#advInput').value=p; sendAdvisorMessage(); };
     qp.appendChild(b);
   });
- state.advisor.quick.push({
-  role: 'assistant', 
-  content: 'Chào bạn 👋 Mình là Bạn AI Mentor Nghề Nghiệp (Gemini) của Plan. Hãy chia sẻ với mình về định hướng công việc, cách viết CV, hay bất cứ câu hỏi nào bạn đang băn khoăn nhé!'
-});
+  state.advisor.quick.push({
+    role: 'assistant', 
+    content: 'Chào bạn 👋 Mình là Bạn AI Mentor Nghề Nghiệp (Gemini) của Plan. Hãy chia sẻ với mình về định hướng công việc, cách viết CV, hay bất cứ câu hỏi nào bạn đang băn khoăn nhé!'
+  });
   renderAdvisorChat();
 }
+
 function switchAdvisorMode(mode){
   state.advisor.mode = mode;
   $('#advModeQuick').classList.toggle('active', mode==='quick');
@@ -1449,6 +1450,7 @@ function switchAdvisorMode(mode){
     kickoffDeepAnalysis();
   }
 }
+
 function renderAdvisorChat(){
   const body = $('#advBody');
   body.innerHTML='';
@@ -1464,6 +1466,8 @@ function renderAdvisorChat(){
   }
   body.scrollTop = body.scrollHeight;
 }
+
+// 1. Hàm gọi đến Vercel Serverless API (/api/chat)
 async function callGeminiMentor(systemPrompt, messages) {
   const res = await fetch('/api/chat', {
     method: 'POST',
@@ -1476,21 +1480,31 @@ async function callGeminiMentor(systemPrompt, messages) {
 
   const data = await res.json();
   if (!res.ok || data.error) {
-    throw new Error(data.error || 'Lỗi kết nối.');
+    throw new Error(data.error || 'Lỗi kết nối API.');
   }
   return data.reply;
 }
+
+// 2. Phân tích sâu
 async function kickoffDeepAnalysis(){
-  state.advisor.busy = true; renderAdvisorChat();
+  state.advisor.busy = true; 
+  renderAdvisorChat();
   try{
-    const reply = await callGemini(DEEP_SYSTEM_PROMPT, [{role:'user', content:'Hãy bắt đầu buổi phân tích tính cách của tôi.'}]);
+    // Đã sửa thành callGeminiMentor
+    const reply = await callGeminiMentor(DEEP_SYSTEM_PROMPT, [{role:'user', content:'Hãy bắt đầu buổi phân tích tính cách của tôi.'}]);
     state.advisor.deep.push({role:'assistant', content:reply});
   }catch(e){
-    console.error('Gemini API error', e);
-    state.advisor.deep.push({role:'assistant', content:'Mình chưa kết nối được với máy chủ AI ngay lúc này. Tính năng này cần được xem trực tiếp trong cửa sổ trò chuyện với Gemini (không hoạt động khi mở file HTML tải về ở trình duyệt thường). Bạn thử tải lại hoặc hỏi lại sau nhé.'});
+    console.error('Gemini API Error:', e);
+    state.advisor.deep.push({
+      role:'assistant', 
+      content:'Hiện tại mình chưa kết nối được với máy chủ AI. Bạn hãy kiểm tra lại biến GEMINI_API_KEY trên Vercel hoặc thử lại sau vài giây nhé!'
+    });
   }
-  state.advisor.busy = false; renderAdvisorChat();
+  state.advisor.busy = false; 
+  renderAdvisorChat();
 }
+
+// 3. Gửi tin nhắn chat nhanh
 async function sendAdvisorMessage(){
   const input = $('#advInput');
   const text = input.value.trim();
@@ -1503,11 +1517,15 @@ async function sendAdvisorMessage(){
   $('#advSend').disabled = true;
   try{
     const systemPrompt = mode==='deep' ? DEEP_SYSTEM_PROMPT : QUICK_SYSTEM_PROMPT;
-    const reply = await callGemini(systemPrompt, state.advisor[mode]);
+    // Đã sửa thành callGeminiMentor
+    const reply = await callGeminiMentor(systemPrompt, state.advisor[mode]);
     state.advisor[mode].push({role:'assistant', content:reply});
   }catch(e){
-    console.error('Gemini API error', e);
-    state.advisor[mode].push({role:'assistant', content:'Mình chưa kết nối được với máy chủ AI ngay lúc này. Nếu bạn đang xem file này ngoài Gemini, đây là lý do — hãy mở lại trong cửa sổ chat với Gemini. Bạn thử lại sau nhé.'});
+    console.error('Gemini API Error:', e);
+    state.advisor[mode].push({
+      role:'assistant', 
+      content:'Hiện tại mình chưa kết nối được với máy chủ AI. Bạn hãy kiểm tra lại biến GEMINI_API_KEY trên Vercel hoặc thử lại sau ít phút nhé!'
+    });
   }
   state.advisor.busy = false;
   $('#advSend').disabled = false;

@@ -5,7 +5,7 @@ export default async function handler(req, res) {
 
   try {
     const { systemPrompt, messages } = req.body;
-    const apiKey = process.env.GEMINI_API_KEY; // Key sk-or-v1-... của OpenRouter
+    const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
       return res.status(500).json({ error: 'Chưa cấu hình API Key trên Vercel.' });
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
       }))
     ];
 
-    // Dùng model Llama 3.3 70B miễn phí vĩnh viễn trên OpenRouter
+    // Dùng model Gemini 2.0 Flash Lite Miễn Phí chính thức trên OpenRouter
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -27,7 +27,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'meta-llama/llama-3.3-70b-instruct:free', 
+        model: 'google/gemini-2.0-flash-lite-001:free', 
         messages: formattedMessages
       })
     });

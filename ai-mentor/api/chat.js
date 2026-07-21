@@ -5,13 +5,12 @@ export default async function handler(req, res) {
 
   try {
     const { systemPrompt, messages } = req.body;
-    const apiKey = process.env.GEMINI_API_KEY; // Hoặc OPENROUTER_API_KEY
+    const apiKey = process.env.GEMINI_API_KEY; // Key sk-or-v1-... của OpenRouter
 
     if (!apiKey) {
       return res.status(500).json({ error: 'Chưa cấu hình API Key trên Vercel.' });
     }
 
-    // Biến đổi format tin nhắn cho chuẩn OpenAI/OpenRouter
     const formattedMessages = [
       { role: 'system', content: systemPrompt },
       ...messages.map(m => ({
@@ -20,7 +19,7 @@ export default async function handler(req, res) {
       }))
     ];
 
-    // Gọi OpenRouter API (Dùng model Gemini Flash hoàn toàn miễn phí)
+    // Sử dụng ID model Gemini 2.0 Flash chuẩn trên OpenRouter
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -28,7 +27,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'google/gemini-2.0-flash-lite-001', // Hoặc 'meta-llama/llama-3.3-70b-instruct:free'
+        model: 'google/gemini-2.0-flash-001', 
         messages: formattedMessages
       })
     });

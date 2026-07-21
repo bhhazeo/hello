@@ -19,7 +19,7 @@ export default async function handler(req, res) {
       }))
     ];
 
-    // Sử dụng ID model Gemini 2.0 Flash chuẩn trên OpenRouter
+    // Dùng model Llama 3.3 70B miễn phí vĩnh viễn trên OpenRouter
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -27,7 +27,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'google/gemini-2.0-flash-001', 
+        model: 'meta-llama/llama-3.3-70b-instruct:free', 
         messages: formattedMessages
       })
     });

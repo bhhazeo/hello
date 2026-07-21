@@ -15,11 +15,15 @@ export default async function handler(req, res) {
 
     const genAI = new GoogleGenerativeAI(apiKey);
     
-    // Tách câu hỏi mới nhất của người dùng
-    const lastMessage = messages[messages.length - 1].content;
+    // Sử dụng model chuẩn xác duy nhất: gemini-2.0-flash
+    const model = genAI.getGenerativeModel({
+      model: 'gemini-2.0-flash',
+      systemInstruction: systemPrompt,
+    });
 
-    // Lọc lịch sử trò chuyện
+    const lastMessage = messages[messages.length - 1].content;
     let rawHistory = messages.slice(0, -1);
+
     if (rawHistory.length > 0 && rawHistory[0].role === 'assistant') {
       rawHistory = rawHistory.slice(1);
     }
@@ -29,36 +33,13 @@ export default async function handler(req, res) {
       parts: [{ text: m.content }]
     }));
 
-    // Danh sách các model hỗ trợ theo thứ tự ưu tiên
-    const candidateModels = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
-    let responseText = null;
-    let lastErr = null;
+    const chat = model.startChat({ history });
+    const result = await chat.sendMessage(lastMessage);
+    const response = await result.response;
 
-    for (const modelName of candidateModels) {
-      try {
-        const model = genAI.getGenerativeModel({
-          model: modelName,
-          systemInstruction: systemPrompt,
-        });
-        const chat = model.startChat({ history });
-        const result = await chat.sendMessage(lastMessage);
-        const response = await result.response;
-        responseText = response.text();
-        if (responseText) break; // Lấy thành công thì dừng vòng lặp
-      } catch (err) {
-        console.warn(`Lỗi với model ${modelName}, đang thử model tiếp theo...`, err.message);
-        lastErr = err;
-      }
-    }
-
-    if (responseText) {
-      return res.status(200).json({ reply: responseText });
-    } else {
-      throw lastErr || new Error('Không thể khởi tạo mô hình Gemini.');
-    }
-
+    return res.status(200).json({ reply: response.text() });
   } catch (error) {
-    console.error('Gemini API Final Error:', error);
-    return res.status(500).json({ error: 'Không thể kết nối tới Bạn AI Mentor Nghề Nghiệp. Vui lòng kiểm tra API Key.' });
+    console.error('Gemini API Error:', error);
+    return res.status(500).json({ error: 'Không thể kết nối tới Bạn AI Mentor Nghề Nghiệp.' });
   }
 }

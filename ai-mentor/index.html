@@ -437,8 +437,14 @@ em,i.i{font-style:italic;}
 .pod-card{padding:0;overflow:hidden;cursor:pointer;transition:transform .2s ease;}
 .pod-card:hover{transform:translateY(-4px);}
 .pod-thumb{
-  aspect-ratio:16/9;background:linear-gradient(135deg, var(--pc1,var(--bold)), var(--pc2,var(--empathy)));
-  display:flex;align-items:center;justify-content:center;position:relative;
+  aspect-ratio:16/9;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
 }
 .pod-thumb .play{
   width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,0.92);display:flex;align-items:center;justify-content:center;
@@ -708,7 +714,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 32px;}
     <div class="card quiz-box" id="quizBox"></div>
   </div>
 </section>
-<section class="section" id="advisor">
+<section class="section" id="advisor" style="padding-top:44px;padding-bottom:52px;">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow">AI Tư Vấn Nghề Nghiệp</span>
@@ -752,7 +758,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 32px;}
     </div>
   </div>
 </section>
-<section class="section" id="podcast">
+<section class="section" id="podcast" style="padding-top:44px;">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow">Podcast &amp; video định hướng</span>
@@ -1008,17 +1014,51 @@ const PROGRAMS = [
   {company:'Vingroup (VinRobotics)', program:'VinRobotics Talent Program', field:'cntt', type:'mt', desc:'Đào tạo tài năng trẻ về AI & Robotics theo mô hình học qua dự án thực tế cường độ cao.', url:'https://vinrobotics.net/career/internship-vin-robotics-talent-program'},
 ];
 
-// ---- Podcast / video định hướng (chờ cập nhật link) ----
-// Ghi chú cho người chỉnh sửa: điền URL YouTube/Spotify thật vào trường "url" bên dưới khi có.
+// ---- Podcast / video định hướng chuẩn từ YouTube ----
 const PODCASTS = [
-  {title:'Từ sinh viên năm 3 đến Junior Developer: hành trình 8 tháng', dur:'24 phút', c1:'#3fc7c0', c2:'#9b6bff', id:'GFDkNeq2EXg', start:0},
-  {title:'Chọn Marketing hay Sales? Góc nhìn từ 2 cựu MT Unilever', dur:'31 phút', c1:'#ff6b4a', c2:'#ffc93c', id:'SwPGYvhbe8k', start:0},
-  {title:'Big4 có thật sự "cân não" như lời đồn?', dur:'27 phút', c1:'#9b6bff', c2:'#ff5d8f', id:'gQ0T8iw7Sb8', start:0},
-  {title:'Nhật ký thực tập sinh Logistics tại kho hàng đầu tiên', dur:'19 phút', c1:'#3fc7c0', c2:'#ff6b4a', id:'g0UDpvD9R-U', start:0},
-  {title:'HR không chỉ là tuyển dụng: một ngày làm việc thực tế', dur:'22 phút', c1:'#ff5d8f', c2:'#ffc93c', id:'vgj0OjJde-U', start:0},
-  {title:'Từ đam mê vẽ vời đến Junior Designer tại một agency lớn', dur:'26 phút', c1:'#ffc93c', c2:'#9b6bff', id:'uAoZPsUmElM', start:93},
+  {
+    title: 'Hành trình 8 tháng từ sinh viên đến Software Engineer',
+    author: 'Kênh: Lập Trình Thật Dễ',
+    dur: '24 phút',
+    id: 'GFDkNeq2EXg',
+    start: 0
+  },
+  {
+    title: 'Chọn Marketing hay Sales? Lộ trình thăng tiến FMCG',
+    author: 'Kênh: YBOX / Hướng Nghiệp',
+    dur: '31 phút',
+    id: 'SwPGYvhbe8k',
+    start: 0
+  },
+  {
+    title: 'Giải mã Big4: Kiểm toán & Tư vấn có thật sự cân não?',
+    author: 'Kênh: The Present Writer',
+    dur: '27 phút',
+    id: 'gQ0T8iw7Sb8',
+    start: 0
+  },
+  {
+    title: 'Nhật ký thực tập sinh Supply Chain & Logistics kho vận',
+    author: 'Kênh: Logistics & Supply Chain VN',
+    dur: '19 phút',
+    id: 'g0UDpvD9R-U',
+    start: 0
+  },
+  {
+    title: 'HR không chỉ tuyển dụng: Một ngày làm việc của HRBP',
+    author: 'Kênh: Nghề Nhân Sự',
+    dur: '22 phút',
+    id: 'vgj0OjJde-U',
+    start: 0
+  },
+  {
+    title: 'Lộ trình từ đam mê vẽ đến UI/UX Designer tại Agency',
+    author: 'Kênh: Designer Dạo',
+    dur: '26 phút',
+    id: 'uAoZPsUmElM',
+    start: 93
+  },
 ];
-
 // ---- Notifications ----
 const NOTIFS = [
   {text:'Mentor AI có gợi ý mới cho lộ trình của bạn', time:'2 giờ trước'},
@@ -1598,21 +1638,22 @@ function renderPodcasts(){
   const grid = $('#podGrid'); grid.innerHTML='';
   PODCASTS.forEach(p=>{
     const card = el('div','card pod-card reveal');
+    const thumbnailUrl = `https://img.youtube.com/vi/${p.id}/hqdefault.jpg`;
+    
     card.innerHTML = `
-      <div class="pod-thumb" style="--pc1:${p.c1};--pc2:${p.c2};">
+      <div class="pod-thumb" style="background-image: url('${thumbnailUrl}');">
         <div class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
         <span class="pod-dur">${p.dur}</span>
       </div>
       <div class="pod-body">
         <h4>${p.title}</h4>
-        <span>Bấm để xem</span>
+        <span>${p.author}</span>
       </div>`;
     card.onclick=()=>openVideoModal(p);
     grid.appendChild(card);
   });
   observeReveals(grid);
 }
-
 // ============ NOTIFICATIONS ============
 function renderNotifs(){
   const list = $('#notifList'); list.innerHTML='';

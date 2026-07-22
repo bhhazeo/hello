@@ -681,7 +681,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 32px;}
 </header>
 
 <main id="mainContent">
-<section class="section" id="dashboard" style="padding-top:40px;padding-bottom:40px;">
+<section class="section" id="dashboard" style="padding-top:64px;padding-bottom:64px;">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow">Bảng tin cá nhân hoá</span>
@@ -691,7 +691,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 32px;}
     <div id="dashboardContent"></div>
   </div>
 </section>
-<section class="section" id="roadmap">
+<section class="section" id="roadmap" style="padding-top:64px;padding-bottom:64px;">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow">Cơ sở dữ liệu nghề nghiệp · 7 nhóm ngành</span>
@@ -702,7 +702,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 32px;}
     <div class="card journey-card" id="journeyCard"></div>
   </div>
 </section>
-<section class="section" id="assessment">
+<section class="section" id="assessment" style="padding-top:64px;padding-bottom:64px;">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow">Công cụ tự đánh giá</span>
@@ -714,7 +714,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 32px;}
     <div class="card quiz-box" id="quizBox"></div>
   </div>
 </section>
-<section class="section" id="advisor" style="padding-top:44px;padding-bottom:52px;">
+<section class="section" id="advisor" style="padding-top:64px;padding-bottom:64px;">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow">AI Tư Vấn Nghề Nghiệp</span>
@@ -758,7 +758,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 32px;}
     </div>
   </div>
 </section>
-<section class="section" id="podcast" style="padding-top:44px;">
+<section class="section" id="podcast" style="padding-top:64px;padding-bottom:64px;">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow">Podcast &amp; video định hướng</span>
@@ -1413,7 +1413,7 @@ function renderDashboard(){
   const f = FIELD_MAP[state.profile.fieldId];
   const m = MOOD_MAP[state.profile.moodId];
   const recoPrograms = PROGRAMS.filter(p=>p.field===f.id).slice(0,3);
-  const recoPodcast = PODCASTS.filter(p=>p.tag===f.name.split(' ')[0] || true).slice(0,2);
+  const recoPodcast = PODCASTS.slice(0,2);
   box.innerHTML = `
     <div class="dash-grid">
       <div class="card dash-panel reveal">
@@ -1427,7 +1427,7 @@ function renderDashboard(){
       <div class="card dash-panel reveal">
         <h3>Podcast nên nghe</h3>
         <div class="dash-reco">
-          ${recoPodcast.map(p=>`<div class="dash-reco-item" onclick="document.getElementById('podcast').scrollIntoView({behavior:'smooth'})"><div class="ic">🎧</div><div><b>${p.title}</b><span>${p.tag} · ${p.dur}</span></div></div>`).join('')}
+          ${recoPodcast.map(p=>`<div class="dash-reco-item" onclick="document.getElementById('podcast').scrollIntoView({behavior:'smooth'})"><div class="ic">🎧</div><div><b>${p.title}</b><span>${p.author} · ${p.dur}</span></div></div>`).join('')}
         </div>
       </div>
     </div>`;

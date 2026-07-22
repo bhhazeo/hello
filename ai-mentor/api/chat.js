@@ -4,23 +4,34 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { systemPrompt, messages } = req.body;
-    // Lấy Key Groq từ Vercel
+    const { systemPrompt, messages, prompt } = req.body;
     const apiKey = process.env.GROQ_API_KEY || process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
       return res.status(500).json({ error: 'Chưa cấu hình API Key trên Vercel.' });
     }
 
-    const formattedMessages = [
-      { role: 'system', content: systemPrompt },
-      ...messages.map(m => ({
-        role: m.role === 'assistant' ? 'assistant' : 'user',
-        content: m.content
-      }))
-    ];
+    let formattedMessages = [];
 
-    // Gọi Groq API - Model Llama 3.3 70B cực mạnh & siêu nhanh
+    // Tự động kiểm tra Frontend gửi lên 'messages' hay 'prompt' để xử lý mềm dẻo
+    if (messages && Array.isArray(messages)) {
+      formattedMessages = [
+        ...(systemPrompt ? [{ role: 'system', content: systemPrompt }] : []),
+        ...messages.map(m => ({
+          role: m.role === 'assistant' ? 'assistant' : 'user',
+          content: m.content
+        }))
+      ];
+    } else if (prompt) {
+      formattedMessages = [
+        ...(systemPrompt ? [{ role: 'system', content: systemPrompt }] : []),
+        { role: 'user', content: prompt }
+      ];
+    } else {
+      return res.status(400).json({ error: 'Thiếu dữ liệu prompt hoặc messages.' });
+    }
+
+    // Gọi Groq API (Llama 3.3 70B cực mượt)
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {

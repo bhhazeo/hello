@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plan — Bảng tin nghề nghiệp của riêng bạn</title>
+<title>Planet - Bảng tin nghề nghiệp của riêng bạn</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
@@ -306,14 +306,22 @@ em,i.i{font-style:italic;}
 .journey-body-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;}
 .journey-body b{font-size:19px;}
 .journey-time{font-family:var(--mono);font-style:italic;font-size:14.5px;color:var(--lo-2);}
-.journey-detail{max-height:0;overflow:hidden;transition:max-height .35s ease;}
-.journey-step.open .journey-detail{max-height:400px;margin-top:12px;}
+.journey-detail{max-height:0;overflow:hidden;transition:max-height .45s ease;}
+.journey-step.open .journey-detail{max-height:2400px;margin-top:12px;}
 .journey-salary{display:inline-flex;gap:6px;align-items:center;font-size:15.5px;color:var(--calm);font-weight:700;margin-bottom:10px;}
 .journey-titles{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
 .journey-title-chip{font-size:13.5px;padding:4px 11px;border-radius:100px;background:var(--panel-3);color:var(--lo);}
 .journey-desc{font-size:16px;color:var(--lo);margin-bottom:10px;}
 .journey-focus{font-size:14.5px;color:var(--lo-2);}
 .journey-focus b{color:var(--hi);font-weight:700;}
+.journey-cv{margin-top:14px;padding:18px 20px;border-radius:14px;background:var(--panel-2);border:1px dashed var(--line);}
+.journey-cv-head{font-weight:700;font-size:18px;margin-bottom:12px;}
+.journey-cv-head span{display:block;font-weight:400;font-size:15px;color:var(--lo-2);margin-top:2px;}
+.journey-cv-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.journey-cv-grid b{font-size:16.5px;color:var(--hi);display:block;margin-bottom:8px;}
+.journey-cv-grid ul,.journey-cv-grid ol{margin:0;padding-left:20px;}
+.journey-cv-grid li{font-size:15.5px;color:var(--lo);margin-bottom:8px;line-height:1.5;}
+@media (max-width:600px){.journey-cv-grid{grid-template-columns:1fr;}}
 .journey-mark-btn{font-size:13.5px;font-weight:700;color:var(--curious);background:none;border:1px solid var(--curious);padding:6px 14px;border-radius:100px;margin-top:6px;}
 
 .journey-progress-note{
@@ -346,6 +354,17 @@ em,i.i{font-style:italic;}
 .quiz-famous{max-width:460px;margin:0 auto 20px;text-align:left;}
 .quiz-famous-label{font-size:13.5px;color:var(--lo-2);display:block;margin-bottom:8px;}
 .quiz-famous-list{display:flex;flex-wrap:wrap;gap:6px;}
+.quiz-q-count{font-family:var(--mono);font-style:italic;font-size:14px;color:var(--lo-2);margin-bottom:6px;}
+.match-bars-label{max-width:460px;margin:0 auto 10px;text-align:left;font-size:15px;color:var(--lo-2);}
+.pop-chart{max-width:460px;margin:0 auto 22px;text-align:left;background:var(--panel-2);border-radius:14px;padding:16px 18px;}
+.pop-bar-row{margin-top:10px;}
+.pop-bar-row:first-child{margin-top:12px;}
+.pop-bar-label{display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;font-family:var(--mono);}
+.pop-bar-track{height:8px;border-radius:100px;background:var(--panel-3);overflow:hidden;}
+.pop-bar-fill{height:100%;border-radius:100px;background:var(--lo-2);transition:width .5s ease;}
+.pop-bar-row.me .pop-bar-label{color:var(--hi);font-weight:700;}
+.pop-bar-row.me .pop-bar-fill{background:linear-gradient(90deg,var(--curious),var(--empathy));}
+.pop-bar-row.me .pop-bar-track{box-shadow:0 0 0 1.5px var(--curious);}
 .quiz-cta-row{display:flex;flex-wrap:wrap;justify-content:center;margin-bottom:8px;}
 .match-bars{max-width:460px;margin:0 auto 26px;text-align:left;}
 .match-bar-row{margin-bottom:12px;}
@@ -463,6 +482,39 @@ footer{border-top:1px solid var(--line);padding:56px 0 32px;}
 .ob-result{text-align:center;}
 .ob-result .r-big{font-size:48px;margin-bottom:10px;}
 
+/* ============ MASCOT POPUP ============ */
+.mascot-popup{
+  position:fixed;bottom:26px;right:26px;z-index:210;display:none;align-items:flex-end;gap:10px;
+  cursor:pointer;
+}
+.mascot-speech{
+  background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px 16px;
+  max-width:220px;font-size:15px;font-weight:600;color:var(--hi);box-shadow:var(--shadow-glow);
+  position:relative;margin-bottom:8px;transition:opacity .4s ease, transform .4s ease;
+}
+.mascot-speech::after{
+  content:'';position:absolute;bottom:14px;right:-7px;width:14px;height:14px;background:var(--panel);
+  border-right:1px solid var(--line);border-bottom:1px solid var(--line);transform:rotate(-45deg);
+}
+.mascot-speech.fade-out{opacity:0;transform:translateY(8px) scale(0.95);pointer-events:none;}
+.mascot-avatar{width:62px;height:62px;flex-shrink:0;border-radius:50%;box-shadow:0 8px 20px -6px rgba(0,0,0,0.4);background:var(--void);}
+.mascot-popup.show{display:flex;animation:mascotPop .6s cubic-bezier(.34,1.56,.64,1) forwards;}
+@keyframes mascotPop{
+  0%{transform:scale(0.3) translateY(30px);opacity:0;}
+  55%{transform:scale(1.08) translateY(-8px);opacity:1;}
+  78%{transform:scale(0.96) translateY(2px);}
+  100%{transform:scale(1) translateY(0);opacity:1;}
+}
+.mascot-avatar.bob{animation:mascotBob 1.8s ease-in-out infinite;}
+@keyframes mascotBob{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-4px) rotate(-4deg);}}
+@media (prefers-reduced-motion: reduce){
+  .mascot-popup.show, .mascot-avatar.bob{animation:none !important;}
+}
+@media (max-width:480px){
+  .mascot-popup{right:18px;bottom:20px;}
+  .mascot-speech{max-width:170px;font-size:14px;}
+}
+
 /* ============ FLOATING SHORTCUT ============ */
 .chat-fab{
   position:fixed;bottom:26px;right:26px;height:58px;padding:0 22px;border-radius:100px;z-index:150;
@@ -474,6 +526,15 @@ footer{border-top:1px solid var(--line);padding:56px 0 32px;}
 @keyframes pulse-ring{0%,100%{box-shadow:0 10px 30px -8px rgba(155,107,255,0.6);}50%{box-shadow:0 10px 30px -4px rgba(155,107,255,0.9), 0 0 0 8px rgba(155,107,255,0.12);}}
 
 /* ============ TOAST ============ */
+.video-modal-overlay{
+  position:fixed;inset:0;background:rgba(10,9,26,0.85);backdrop-filter:blur(6px);
+  display:none;align-items:center;justify-content:center;z-index:220;padding:60px 20px 20px;
+}
+.video-modal-overlay.show{display:flex;}
+.video-modal-box{position:relative;max-width:900px;width:100%;}
+.video-modal-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#000;box-shadow:0 30px 80px -20px rgba(0,0,0,0.7);}
+.video-modal-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
+
 .toast{
   position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);
   background:var(--hi);color:var(--void);padding:13px 24px;border-radius:100px;font-size:16px;font-weight:700;
@@ -553,7 +614,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 32px;}
         <circle cx="25.8" cy="19" r="5.1" fill="#201C3D"/>
         <defs><linearGradient id="gw1" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#ffc93c"/><stop offset="1" stop-color="#ff5d8f"/></linearGradient></defs>
       </svg>
-      Plan
+      Planet
     </a>
     <div class="nav-links">
       <a href="#roadmap">Lộ trình nghề</a>
@@ -589,7 +650,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 32px;}
     <div class="reveal in">
       <span class="eyebrow">Bảng tin nghề nghiệp cá nhân hoá · Gen Z Edition</span>
       <h1>Một bảng tin nghề nghiệp được đo ni cho <span class="accent">chính bạn</span>.</h1>
-      <p class="hero-sub">Plan cá nhân hoá gợi ý lộ trình, chương trình Internship/MT và podcast theo đúng chuyên ngành và ưu tiên nghề nghiệp của bạn — trả lời vài câu hỏi 30 giây là bảng tin hiện ra ngay.</p>
+      <p class="hero-sub">Planet cá nhân hoá gợi ý lộ trình, chương trình Internship/MT và podcast theo đúng chuyên ngành và ưu tiên nghề nghiệp của bạn — trả lời vài câu hỏi 30 giây là bảng tin hiện ra ngay.</p>
       <div class="hero-ctas">
         <button class="btn btn-primary" id="heroStartBtn">Mở bảng tin của tôi →</button>
         <button class="btn btn-outline" onclick="document.getElementById('roadmap').scrollIntoView({behavior:'smooth'})">Khám phá lộ trình nghề</button>
@@ -640,7 +701,8 @@ footer{border-top:1px solid var(--line);padding:56px 0 32px;}
     <div class="section-head reveal">
       <span class="eyebrow">Công cụ tự đánh giá</span>
       <h2>Trắc nghiệm khám phá bản thân</h2>
-      <p>3 bài trắc nghiệm rút gọn — mỗi bài chỉ mất khoảng 1 phút — phân tích nhóm tính cách của bạn và tính điểm phù hợp với cả 7 nhóm ngành.</p>
+      <p>3 bài trắc nghiệm đầy đủ (12–20 câu mỗi bài, có lặp lại câu hỏi theo từng khía cạnh để kết quả chính xác hơn) — phân tích nhóm tính cách của bạn, so sánh với phân bố dân số, gợi ý người nổi tiếng cùng nhóm và tính điểm phù hợp với cả 7 ngành nghề.</p>
+      <p style="margin-top:6px;">⏱️ MBTI ~20 câu · Holland ~18 câu · DISC ~12 câu — mỗi bài mất khoảng 3–5 phút.</p>
     </div>
     <div class="quiz-tabs" id="quizTabs"></div>
     <div class="card quiz-box" id="quizBox"></div>
@@ -656,7 +718,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 32px;}
 
     <div class="advisor-note reveal">
       <span>💡</span>
-      <span>Mentor AI gọi trực tiếp mô hình Gemini — tính năng này hoạt động khi bạn xem trang ở đây, trong cửa sổ trò chuyện với Gemini. Nếu bạn tải file này ra và mở như một trang HTML tĩnh trong trình duyệt riêng, phần chat sẽ không kết nối được vì cần lớp xác thực của Gemini.</span>
+      <span>Mentor AI gọi trực tiếp mô hình Claude — tính năng này hoạt động khi bạn xem trang ở đây, trong cửa sổ trò chuyện với Claude. Nếu bạn tải file này ra và mở như một trang HTML tĩnh trong trình duyệt riêng, phần chat sẽ không kết nối được vì cần lớp xác thực của Claude.</span>
     </div>
 
     <div class="card advisor-console reveal">
@@ -720,7 +782,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 32px;}
             <circle cx="25.8" cy="19" r="5.1" fill="#201C3D"/>
             <defs><linearGradient id="gw2" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#ffc93c"/><stop offset="1" stop-color="#ff5d8f"/></linearGradient></defs>
           </svg>
-          Plan
+          Planet
         </a>
         <p>Nền tảng định hướng nghề nghiệp cho sinh viên Gen Z — bảng tin việc làm, lộ trình và gợi ý được cá nhân hoá theo đúng chuyên ngành và ưu tiên nghề nghiệp của bạn.</p>
       </div>
@@ -731,15 +793,9 @@ footer{border-top:1px solid var(--line);padding:56px 0 32px;}
         <a href="#advisor">AI Tư Vấn</a>
         <a href="#podcast">Podcast</a>
       </div>
-      <div class="foot-col">
-        <h5>Kết nối</h5>
-        <a href="#">Fanpage</a>
-        <a href="#">Instagram</a>
-        <a href="#">TikTok</a>
-      </div>
-    </div>
+        </div>
     <div class="foot-bottom">
-      <span>© 2026 Plan. Bản demo giao diện — dữ liệu minh hoạ.</span>
+      <span>© 2026 Planet. Bản demo giao diện kèm dữ liệu minh hoạ.</span>
       <span>Cá nhân hoá theo đúng ưu tiên nghề nghiệp của bạn ✨</span>
     </div>
   </div>
@@ -783,10 +839,31 @@ footer{border-top:1px solid var(--line);padding:56px 0 32px;}
     </div>
   </div>
 </div>
-<button class="chat-fab" id="chatFab" aria-label="Mở Mentor AI">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
-  <span>Hỏi Mentor AI</span>
-</button>
+<div class="mascot-popup" id="mascotPopup" role="button" aria-label="Mở Mentor AI">
+  <div class="mascot-speech" id="mascotSpeech">👋 Chào bạn! Mentor AI đây, cùng khám phá lộ trình của bạn nhé!</div>
+  <svg class="mascot-avatar bob" viewBox="0 0 80 80">
+    <circle cx="40" cy="40" r="38" fill="url(#mascotGrad)"/>
+    <circle cx="27" cy="37" r="5.2" fill="#201C3D"/>
+    <circle cx="53" cy="37" r="5.2" fill="#201C3D"/>
+    <circle cx="29" cy="35" r="1.6" fill="#fff"/>
+    <circle cx="55" cy="35" r="1.6" fill="#fff"/>
+    <path d="M25 50 Q40 63 55 50" stroke="#201C3D" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M14 26 Q10 16 18 12" stroke="#201C3D" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M66 26 Q70 16 62 12" stroke="#201C3D" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <defs><linearGradient id="mascotGrad" x1="0" y1="0" x2="80" y2="80"><stop stop-color="#ffc93c"/><stop offset="1" stop-color="#ff5d8f"/></linearGradient></defs>
+  </svg>
+</div>
+
+<div class="video-modal-overlay" id="videoModalOverlay">
+  <div class="video-modal-box">
+    <button class="modal-close" id="videoModalClose" aria-label="Đóng" style="top:-46px;right:0;background:rgba(255,255,255,0.15);color:#fff;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="video-modal-frame">
+      <iframe id="videoModalIframe" src="" title="Video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
 
 <div class="toast" id="toast"></div>
 
@@ -805,71 +882,106 @@ const FIELDS = [
     desc:'Xây dựng phần mềm, web, ứng dụng và hệ thống dữ liệu cho mọi ngành nghề khác.',
     skills:['Tư duy logic','1 ngôn ngữ lập trình','Giải quyết vấn đề','Tiếng Anh kỹ thuật'],
     roadmap:[
-      {stage:'Thực tập sinh Dev', time:'0–6 tháng', salary:'2–5 triệu (phụ cấp)', titles:['Intern Developer','Trainee QA'], focus:['Git cơ bản','Đọc hiểu code có sẵn','1 ngôn ngữ nền tảng'], detail:'Làm quen codebase, sửa lỗi nhỏ, viết test dưới sự hướng dẫn của mentor.'},
-      {stage:'Fresher', time:'6–12 tháng', salary:'8–12 triệu', titles:['Fresher Developer','Fresher Tester'], focus:['Viết unit test','Agile/Scrum','Debug độc lập'], detail:'Tự nhận task nhỏ, code review, hiểu quy trình phát triển phần mềm.'},
-      {stage:'Junior Developer', time:'1–2 năm', salary:'12–20 triệu', titles:['Junior Backend/Frontend Dev','Junior Mobile Dev'], focus:['Thiết kế module nhỏ','Tối ưu hiệu năng','Code review'], detail:'Chủ động thiết kế module, tối ưu hiệu năng cơ bản.'},
-      {stage:'Senior Developer', time:'3–5 năm', salary:'25–45 triệu', titles:['Senior Developer','Solution Developer'], focus:['Kiến trúc hệ thống','Mentor junior','Ra quyết định kỹ thuật'], detail:'Kiến trúc hệ thống, mentor junior, ra quyết định kỹ thuật.'},
-      {stage:'Tech Lead / Manager', time:'5+ năm', salary:'45–80+ triệu', titles:['Tech Lead','Engineering Manager'], focus:['Định hướng công nghệ','Quản lý đội ngũ','Lập kế hoạch dự án'], detail:'Định hướng công nghệ, quản lý đội ngũ kỹ thuật.'},
+      {stage:'Thực tập sinh Dev', time:'0–6 tháng', salary:'2–5 triệu (phụ cấp)', titles:['Intern Developer','Trainee QA'], focus:['Git cơ bản','Đọc hiểu code có sẵn','1 ngôn ngữ nền tảng'], detail:'Làm quen codebase, sửa lỗi nhỏ, viết test dưới sự hướng dẫn của mentor.',
+        cv:{company:'Tham khảo: FPT Software, VNPT IT', focus:['GPA khá trở lên (nhiều công ty như VNPT IT, FPT yêu cầu GPA "khá" trở lên)','2–3 dự án cá nhân/đồ án kèm link GitHub, ghi rõ công nghệ dùng','Điểm các môn nền tảng (cấu trúc dữ liệu, CSDL, lập trình hướng đối tượng)'], structure:['Header: tên, vị trí ứng tuyển, GitHub/portfolio','Học vấn (GPA, môn liên quan)','Dự án cá nhân (mô tả theo mẫu Bối cảnh – Việc làm – Kết quả)','Kỹ năng kỹ thuật theo nhóm (ngôn ngữ, công cụ, framework)']}},
+      {stage:'Fresher', time:'6–12 tháng', salary:'8–12 triệu', titles:['Fresher Developer','Fresher Tester'], focus:['Viết unit test','Agile/Scrum','Debug độc lập'], detail:'Tự nhận task nhỏ, code review, hiểu quy trình phát triển phần mềm.',
+        cv:{company:'Tham khảo: FPT Software', focus:['1–2 kinh nghiệm thực tập có kết quả đo được (vd: "giảm 20% thời gian xử lý request")','Kỹ năng cụ thể khớp với JD (ngôn ngữ, framework, DB)','Kinh nghiệm làm việc theo Agile/Scrum'], structure:['Tóm tắt 2–3 dòng về định hướng kỹ thuật','Kinh nghiệm thực tập (theo công thức STAR)','Kỹ năng kỹ thuật xếp theo mức độ thành thạo','Học vấn + chứng chỉ (nếu có)']}},
+      {stage:'Junior Developer', time:'1–2 năm', salary:'12–20 triệu', titles:['Junior Backend/Frontend Dev','Junior Mobile Dev'], focus:['Thiết kế module nhỏ','Tối ưu hiệu năng','Code review'], detail:'Chủ động thiết kế module, tối ưu hiệu năng cơ bản.',
+        cv:{company:'Tham khảo: FPT Software, VNG', focus:['Kết quả có số liệu (vd: "tối ưu query giảm 30% thời gian phản hồi")','Phạm vi module/tính năng đã tự chủ triển khai từ đầu đến cuối','Kỹ năng code review và viết test tự động'], structure:['Tóm tắt kinh nghiệm 2–3 dòng','Kinh nghiệm theo từng dự án (nêu kết quả cụ thể)','Kỹ năng kỹ thuật (ngôn ngữ, cloud, CSDL)','Học vấn/chứng chỉ bổ sung']}},
+      {stage:'Senior Developer', time:'3–5 năm', salary:'25–45 triệu', titles:['Senior Developer','Solution Developer'], focus:['Kiến trúc hệ thống','Mentor junior','Ra quyết định kỹ thuật'], detail:'Kiến trúc hệ thống, mentor junior, ra quyết định kỹ thuật.',
+        cv:{company:'Tham khảo: FPT Software, VNG', focus:['Vai trò thiết kế kiến trúc hệ thống, ra quyết định công nghệ','Số lượng junior đã mentor/hướng dẫn','Tác động kinh doanh của giải pháp (chi phí, hiệu năng, uptime)'], structure:['Tóm tắt vai trò kỹ thuật + chuyên môn sâu','Kinh nghiệm (nhấn mạnh quy mô & độ phức tạp hệ thống)','Kỹ năng lãnh đạo kỹ thuật','Học vấn/chứng chỉ nâng cao (AWS, GCP...)']}},
+      {stage:'Tech Lead / Manager', time:'5+ năm', salary:'45–80+ triệu', titles:['Tech Lead','Engineering Manager'], focus:['Định hướng công nghệ','Quản lý đội ngũ','Lập kế hoạch dự án'], detail:'Định hướng công nghệ, quản lý đội ngũ kỹ thuật.',
+        cv:{company:'Tham khảo: FPT Software, Vingroup', focus:['Quy mô đội ngũ kỹ thuật đã quản lý','Định hướng công nghệ ảnh hưởng đến nhiều dự án/sản phẩm','Kỹ năng quản lý ngân sách & tuyển dụng đội ngũ'], structure:['Tóm tắt vai trò lãnh đạo công nghệ','Thành tích quản lý (quy mô team, kết quả kinh doanh)','Kỹ năng lãnh đạo & chiến lược công nghệ','Học vấn/chứng chỉ quản lý (nếu có)']}},
     ]},
   {id:'marketing', name:'Marketing & Truyền thông', icon:'📣', moods:['creative','people'],
     desc:'Xây dựng thương hiệu, nội dung và chiến dịch kết nối doanh nghiệp với khách hàng.',
     skills:['Sáng tạo nội dung','Phân tích dữ liệu khách hàng','Kể chuyện thương hiệu','Công cụ thiết kế cơ bản'],
     roadmap:[
-      {stage:'Thực tập sinh Marketing', time:'0–6 tháng', salary:'2–4 triệu', titles:['Marketing Intern','Content Intern'], focus:['Viết caption/content','Nghiên cứu đối thủ','Lên lịch nội dung'], detail:'Hỗ trợ lên lịch nội dung, nghiên cứu đối thủ, viết caption.'},
-      {stage:'Marketing Executive', time:'6–18 tháng', salary:'9–14 triệu', titles:['Marketing Executive','Brand Executive'], focus:['Chạy chiến dịch nhỏ','Đo lường KPI kênh','Làm việc với agency'], detail:'Chạy chiến dịch nhỏ, đo lường hiệu quả kênh.'},
-      {stage:'Marketing Specialist', time:'2–3 năm', salary:'16–26 triệu', titles:['Content/Performance/Brand Specialist'], focus:['Chuyên sâu 1 mảng','Tối ưu ngân sách quảng cáo','Phân tích insight'], detail:'Chuyên sâu 1 mảng: content, performance, hoặc branding.'},
-      {stage:'Marketing Manager', time:'4–6 năm', salary:'28–50 triệu', titles:['Marketing Manager','Brand Manager'], focus:['Lập chiến lược thương hiệu','Quản lý ngân sách lớn','Quản lý đội nhóm'], detail:'Lập chiến lược, quản lý ngân sách và đội nhóm.'},
-      {stage:'Head of Marketing', time:'6+ năm', salary:'55–100+ triệu', titles:['Head of Marketing','CMO'], focus:['Định hướng thương hiệu toàn công ty','Quan hệ đối tác chiến lược'], detail:'Định hướng thương hiệu toàn công ty.'},
+      {stage:'Thực tập sinh Marketing', time:'0–6 tháng', salary:'2–4 triệu', titles:['Marketing Intern','Content Intern'], focus:['Viết caption/content','Nghiên cứu đối thủ','Lên lịch nội dung'], detail:'Hỗ trợ lên lịch nội dung, nghiên cứu đối thủ, viết caption.',
+        cv:{company:'Tham khảo: Unilever Vietnam, Suntory PepsiCo', focus:['Hoạt động CLB/dự án sinh viên liên quan truyền thông, sự kiện (nêu vai trò + quy mô)','Bài viết/case mẫu thể hiện tư duy nội dung','GPA khá + tiếng Anh giao tiếp tốt (UFLP có vòng phỏng vấn tiếng Anh)'], structure:['Mục tiêu nghề nghiệp ngắn gọn','Học vấn','Hoạt động ngoại khoá (vai trò + kết quả)','Kỹ năng (content, MS Office, thiết kế cơ bản)']}},
+      {stage:'Marketing Executive', time:'6–18 tháng', salary:'9–14 triệu', titles:['Marketing Executive','Brand Executive'], focus:['Chạy chiến dịch nhỏ','Đo lường KPI kênh','Làm việc với agency'], detail:'Chạy chiến dịch nhỏ, đo lường hiệu quả kênh.',
+        cv:{company:'Tham khảo: Unilever UFLP, Nestlé', focus:['Case study/chiến dịch nhỏ đã triển khai kèm số liệu (reach, engagement, chuyển đổi)','Tư duy xử lý tình huống (UFLP dùng vòng "Assessment Center" đánh giá năng lực này)','Kỹ năng phân tích dữ liệu khách hàng cơ bản'], structure:['Tóm tắt định hướng chuyên môn (2 dòng)','Kinh nghiệm (chiến dịch + kết quả đo lường)','Kỹ năng chuyên môn (content, media, data)','Học vấn + giải thưởng/case competition']}},
+      {stage:'Marketing Specialist', time:'2–3 năm', salary:'16–26 triệu', titles:['Content/Performance/Brand Specialist'], focus:['Chuyên sâu 1 mảng','Tối ưu ngân sách quảng cáo','Phân tích insight'], detail:'Chuyên sâu 1 mảng: content, performance, hoặc branding.',
+        cv:{company:'Tham khảo: Suntory PepsiCo, Masan Consumer', focus:['Sở hữu toàn bộ 1 mảng (content/performance/brand) với KPI rõ ràng, trước–sau','Kinh nghiệm tối ưu ngân sách quảng cáo, tăng trưởng chỉ số cụ thể','Kinh nghiệm làm việc với agency/đối tác bên ngoài'], structure:['Tóm tắt chuyên môn sâu 1 mảng','Kinh nghiệm (nêu KPI trước/sau)','Kỹ năng công cụ (Meta Ads, GA4, Adobe...)','Học vấn/chứng chỉ (Google Ads, HubSpot...)']}},
+      {stage:'Marketing Manager', time:'4–6 năm', salary:'28–50 triệu', titles:['Marketing Manager','Brand Manager'], focus:['Lập chiến lược thương hiệu','Quản lý ngân sách lớn','Quản lý đội nhóm'], detail:'Lập chiến lược, quản lý ngân sách và đội nhóm.',
+        cv:{company:'Tham khảo: Unilever, Nestlé Việt Nam', focus:['Kết quả tăng trưởng thương hiệu/doanh số do chiến lược dẫn dắt','Quy mô ngân sách & đội ngũ đã quản lý','Khả năng làm việc với ban lãnh đạo, đối tác chiến lược'], structure:['Tóm tắt vai trò chiến lược thương hiệu','Thành tích quản lý (ngân sách, đội nhóm, kết quả kinh doanh)','Kỹ năng lãnh đạo & lập kế hoạch','Học vấn/MBA (nếu có)']}},
+      {stage:'Head of Marketing', time:'6+ năm', salary:'55–100+ triệu', titles:['Head of Marketing','CMO'], focus:['Định hướng thương hiệu toàn công ty','Quan hệ đối tác chiến lược'], detail:'Định hướng thương hiệu toàn công ty.',
+        cv:{company:'Tham khảo: Tập đoàn FMCG đa quốc gia', focus:['Tác động đến toàn bộ định vị thương hiệu công ty','Kinh nghiệm quản lý đa kênh, đa thị trường','Networking với đối tác/agency cấp cao'], structure:['Tóm tắt tầm nhìn thương hiệu','Thành tích cấp công ty (thị phần, doanh thu)','Kỹ năng lãnh đạo cấp cao','Học vấn nâng cao/chứng nhận ngành']}},
     ]},
   {id:'taichinh', name:'Tài chính - Ngân hàng', icon:'💰', moods:['growth','stability'],
     desc:'Quản lý dòng tiền, đầu tư, rủi ro cho cá nhân, doanh nghiệp và tổ chức tài chính.',
     skills:['Excel/Phân tích số liệu','Tư duy logic - cẩn thận','Kiến thức tài chính cơ bản','Chứng chỉ chuyên ngành (nếu có)'],
     roadmap:[
-      {stage:'Thực tập sinh', time:'0–6 tháng', salary:'2–5 triệu', titles:['Banking Intern','Finance Intern'], focus:['Excel cơ bản','Đối chiếu sổ sách','Quy trình nội bộ'], detail:'Hỗ trợ nhập liệu, đối chiếu sổ sách, học quy trình nội bộ.'},
-      {stage:'Chuyên viên (Fresher)', time:'6–18 tháng', salary:'10–15 triệu', titles:['Fresher Analyst','Relationship Officer'], focus:['Phân tích báo cáo tài chính','Xử lý hồ sơ','Tuân thủ quy định'], detail:'Xử lý hồ sơ, phân tích báo cáo tài chính cơ bản.'},
-      {stage:'Chuyên viên chính', time:'2–4 năm', salary:'16–28 triệu', titles:['Financial Analyst','Relationship Manager'], focus:['Tư vấn khách hàng','Quản lý danh mục nhỏ','Đánh giá rủi ro'], detail:'Tư vấn khách hàng, quản lý danh mục nhỏ.'},
-      {stage:'Trưởng nhóm', time:'4–7 năm', salary:'30–55 triệu', titles:['Team Lead','Assistant Manager'], focus:['Quản lý chỉ tiêu nhóm','Đào tạo nhân viên mới'], detail:'Quản lý team, chịu trách nhiệm chỉ tiêu.'},
-      {stage:'Giám đốc chi nhánh/Bộ phận', time:'7+ năm', salary:'55–120+ triệu', titles:['Branch/Department Director'], focus:['Hoạch định chiến lược','Quản trị rủi ro cấp cao'], detail:'Hoạch định chiến lược tài chính.'},
+      {stage:'Thực tập sinh', time:'0–6 tháng', salary:'2–5 triệu', titles:['Banking Intern','Finance Intern'], focus:['Excel cơ bản','Đối chiếu sổ sách','Quy trình nội bộ'], detail:'Hỗ trợ nhập liệu, đối chiếu sổ sách, học quy trình nội bộ.',
+        cv:{company:'Tham khảo: HSBC, Big4 (Deloitte, PwC, EY, KPMG)', focus:['GPA từ 3.2/4 trở lên (mức HSBC thường yêu cầu cho graduate programme)','Chứng chỉ liên quan (ACCA, CFA level 1) là lợi thế lớn ở Big4','Kỹ năng Excel & tư duy số liệu qua bài tập tình huống'], structure:['Học vấn (GPA nổi bật)','Chứng chỉ chuyên ngành','Kinh nghiệm (thực tập/dự án phân tích số liệu)','Kỹ năng (Excel, đọc hiểu báo cáo tài chính)']}},
+      {stage:'Chuyên viên (Fresher)', time:'6–18 tháng', salary:'10–15 triệu', titles:['Fresher Analyst','Relationship Officer'], focus:['Phân tích báo cáo tài chính','Xử lý hồ sơ','Tuân thủ quy định'], detail:'Xử lý hồ sơ, phân tích báo cáo tài chính cơ bản.',
+        cv:{company:'Tham khảo: HSBC Local Graduate Programme', focus:['Trải qua quy trình CV → Test → Phỏng vấn → Final Interview (phổ biến ở ngân hàng/Big4)','Kinh nghiệm xử lý hồ sơ/số liệu thực tế có kết quả cụ thể','Am hiểu tuân thủ quy định (compliance) — nêu ví dụ cụ thể'], structure:['Tóm tắt định hướng tài chính-ngân hàng','Kinh nghiệm (nêu số lượng hồ sơ/giao dịch xử lý)','Kỹ năng phân tích + công cụ (Excel, SQL cơ bản)','Học vấn + chứng chỉ']}},
+      {stage:'Chuyên viên chính', time:'2–4 năm', salary:'16–28 triệu', titles:['Financial Analyst','Relationship Manager'], focus:['Tư vấn khách hàng','Quản lý danh mục nhỏ','Đánh giá rủi ro'], detail:'Tư vấn khách hàng, quản lý danh mục nhỏ.',
+        cv:{company:'Tham khảo: VPBank, Techcombank', focus:['Danh mục khách hàng/tài sản đã tư vấn, quản lý (nêu quy mô cụ thể)','Kết quả kinh doanh cá nhân (tăng trưởng dư nợ, doanh số)','Kỹ năng đánh giá rủi ro tín dụng'], structure:['Tóm tắt chuyên môn tư vấn tài chính','Kinh nghiệm (quy mô danh mục, kết quả)','Kỹ năng phân tích rủi ro & tài chính','Chứng chỉ (CFA, FRM nếu có)']}},
+      {stage:'Trưởng nhóm', time:'4–7 năm', salary:'30–55 triệu', titles:['Team Lead','Assistant Manager'], focus:['Quản lý chỉ tiêu nhóm','Đào tạo nhân viên mới'], detail:'Quản lý team, chịu trách nhiệm chỉ tiêu.',
+        cv:{company:'Tham khảo: Ngân hàng/tổ chức tài chính lớn', focus:['Quy mô đội ngũ và chỉ tiêu nhóm đã đạt được','Kinh nghiệm đào tạo, đánh giá nhân viên','Quản lý rủi ro ở cấp phòng ban'], structure:['Tóm tắt vai trò quản lý nhóm','Thành tích (chỉ tiêu nhóm, tỷ lệ hoàn thành)','Kỹ năng lãnh đạo & đào tạo','Chứng chỉ quản lý/tài chính nâng cao']}},
+      {stage:'Giám đốc chi nhánh/Bộ phận', time:'7+ năm', salary:'55–120+ triệu', titles:['Branch/Department Director'], focus:['Hoạch định chiến lược','Quản trị rủi ro cấp cao'], detail:'Hoạch định chiến lược tài chính.',
+        cv:{company:'Tham khảo: Ngân hàng/quỹ đầu tư lớn', focus:['Kết quả kinh doanh cấp chi nhánh/bộ phận','Kinh nghiệm hoạch định chiến lược tài chính','Quan hệ với cơ quan quản lý, đối tác lớn'], structure:['Tóm tắt tầm nhìn quản trị tài chính','Thành tích cấp chi nhánh/bộ phận','Kỹ năng lãnh đạo chiến lược','Học vấn/chứng chỉ điều hành (MBA, CFA)']}},
     ]},
   {id:'thietke', name:'Thiết kế & Sáng tạo', icon:'🎨', moods:['creative','explore'],
     desc:'Biến ý tưởng thành hình ảnh, sản phẩm và trải nghiệm người dùng.',
     skills:['Tư duy thẩm mỹ','Công cụ thiết kế (Figma/AI)','Kể chuyện bằng hình ảnh','Nhận phản hồi & lặp lại'],
     roadmap:[
-      {stage:'Thực tập sinh Design', time:'0–6 tháng', salary:'2–5 triệu', titles:['Design Intern'], focus:['Dựng asset cơ bản','Học design system','Figma/AI'], detail:'Hỗ trợ dựng asset, học hệ thống thiết kế của công ty.'},
-      {stage:'Junior Designer', time:'6–18 tháng', salary:'9–15 triệu', titles:['Junior Visual/UI Designer'], focus:['Thiết kế có review','Nhận & xử lý feedback'], detail:'Tự thiết kế ấn phẩm/màn hình nhỏ có review.'},
-      {stage:'Product/Visual Designer', time:'2–4 năm', salary:'16–28 triệu', titles:['Product Designer','Visual Designer'], focus:['Sở hữu 1 luồng sản phẩm','Nghiên cứu người dùng cơ bản'], detail:'Sở hữu 1 luồng sản phẩm hoặc bộ nhận diện.'},
-      {stage:'Senior Designer', time:'4–6 năm', salary:'28–50 triệu', titles:['Senior Product Designer'], focus:['Xây dựng design system','Dẫn dắt dự án lớn'], detail:'Xây dựng design system, dẫn dắt dự án lớn.'},
-      {stage:'Design Lead', time:'6+ năm', salary:'50–90+ triệu', titles:['Design Lead','Creative Director'], focus:['Định hướng thẩm mỹ toàn sản phẩm','Xây dựng đội ngũ'], detail:'Định hướng thẩm mỹ và trải nghiệm toàn sản phẩm.'},
+      {stage:'Thực tập sinh Design', time:'0–6 tháng', salary:'2–5 triệu', titles:['Design Intern'], focus:['Dựng asset cơ bản','Học design system','Figma/AI'], detail:'Hỗ trợ dựng asset, học hệ thống thiết kế của công ty.',
+        cv:{company:'Tham khảo: Samsung, Shopee, agency sáng tạo', focus:['Portfolio là yếu tố quan trọng nhất — nên có link Behance/Dribbble ngay đầu CV','Đồ án/dự án cá nhân thể hiện rõ quy trình tư duy, không chỉ ảnh đẹp','Thành thạo công cụ cơ bản (Figma/Adobe)'], structure:['Link portfolio ngay đầu CV','Học vấn','Dự án nổi bật (2–3 dự án, nêu vai trò + công cụ)','Kỹ năng công cụ thiết kế']}},
+      {stage:'Junior Designer', time:'6–18 tháng', salary:'9–15 triệu', titles:['Junior Visual/UI Designer'], focus:['Thiết kế có review','Nhận & xử lý feedback'], detail:'Tự thiết kế ấn phẩm/màn hình nhỏ có review.',
+        cv:{company:'Tham khảo: Agency sáng tạo, phòng design công ty tech', focus:['Dự án thực tế đã lên sản phẩm (không chỉ concept)','Khả năng nhận & xử lý feedback — nêu ví dụ cụ thể','Hiểu cơ bản về UX/UI nếu làm sản phẩm số'], structure:['Portfolio + tóm tắt phong cách thiết kế','Kinh nghiệm (dự án, vai trò, kết quả)','Kỹ năng (công cụ, quy trình)','Học vấn/khoá học thêm']}},
+      {stage:'Product/Visual Designer', time:'2–4 năm', salary:'16–28 triệu', titles:['Product Designer','Visual Designer'], focus:['Sở hữu 1 luồng sản phẩm','Nghiên cứu người dùng cơ bản'], detail:'Sở hữu 1 luồng sản phẩm hoặc bộ nhận diện.',
+        cv:{company:'Tham khảo: Shopee, VNG, tech startup', focus:['Sở hữu toàn bộ 1 luồng sản phẩm/bộ nhận diện, có số liệu cải thiện (vd: tăng tỷ lệ chuyển đổi)','Kỹ năng nghiên cứu người dùng cơ bản','Làm việc chặt với PM/Developer'], structure:['Portfolio + case study chi tiết (vấn đề – giải pháp – kết quả)','Kinh nghiệm (nêu số liệu tác động)','Kỹ năng thiết kế + nghiên cứu người dùng','Học vấn/chứng chỉ UX']}},
+      {stage:'Senior Designer', time:'4–6 năm', salary:'28–50 triệu', titles:['Senior Product Designer'], focus:['Xây dựng design system','Dẫn dắt dự án lớn'], detail:'Xây dựng design system, dẫn dắt dự án lớn.',
+        cv:{company:'Tham khảo: Công ty sản phẩm lớn/agency', focus:['Xây dựng/duy trì design system cho toàn sản phẩm','Dẫn dắt dự án lớn, làm việc với nhiều phòng ban','Mentor các designer junior'], structure:['Portfolio cấp cao + triết lý thiết kế','Kinh nghiệm (quy mô dự án, đội ngũ phối hợp)','Kỹ năng lãnh đạo chuyên môn','Học vấn/giải thưởng thiết kế']}},
+      {stage:'Design Lead', time:'6+ năm', salary:'50–90+ triệu', titles:['Design Lead','Creative Director'], focus:['Định hướng thẩm mỹ toàn sản phẩm','Xây dựng đội ngũ'], detail:'Định hướng thẩm mỹ và trải nghiệm toàn sản phẩm.',
+        cv:{company:'Tham khảo: Tập đoàn công nghệ/sản phẩm lớn', focus:['Định hướng thẩm mỹ & trải nghiệm cho toàn bộ sản phẩm/thương hiệu','Xây dựng và phát triển đội ngũ design','Làm việc trực tiếp với C-level'], structure:['Portfolio cấp lãnh đạo + tầm nhìn thiết kế','Thành tích (quy mô đội ngũ, tác động kinh doanh)','Kỹ năng lãnh đạo & chiến lược sản phẩm','Học vấn/kinh nghiệm quốc tế (nếu có)']}},
     ]},
   {id:'nhansu', name:'Nhân sự (HR)', icon:'🤝', moods:['people','stability'],
     desc:'Tuyển dụng, đào tạo và chăm sóc con người trong tổ chức.',
     skills:['Giao tiếp & lắng nghe','Tổ chức sự kiện/quy trình','Hiểu luật lao động cơ bản','Đồng cảm & giải quyết xung đột'],
     roadmap:[
-      {stage:'Thực tập sinh HR', time:'0–6 tháng', salary:'2–4 triệu', titles:['HR Intern'], focus:['Sàng lọc CV','Sắp lịch phỏng vấn'], detail:'Hỗ trợ sàng lọc CV, sắp lịch phỏng vấn.'},
-      {stage:'HR Executive', time:'6–18 tháng', salary:'8–13 triệu', titles:['HR/TA Executive'], focus:['Tuyển dụng 1 mảng nhỏ','Onboarding nhân viên mới'], detail:'Phụ trách tuyển dụng hoặc C&B cho 1 mảng nhỏ.'},
-      {stage:'HR Specialist', time:'2–4 năm', salary:'14–24 triệu', titles:['TA/C&B/L&D Specialist'], focus:['Chuyên sâu 1 mảng HR','Xây dựng quy trình tuyển dụng'], detail:'Chuyên sâu Talent Acquisition, C&B hoặc L&D.'},
-      {stage:'HR Manager', time:'4–7 năm', salary:'26–45 triệu', titles:['HR Manager'], focus:['Xây dựng chính sách nhân sự','Quản lý team HR'], detail:'Xây dựng chính sách nhân sự, quản lý team HR.'},
-      {stage:'HR Director', time:'7+ năm', salary:'50–90+ triệu', titles:['HR Director','CHRO'], focus:['Chiến lược nhân sự','Văn hoá doanh nghiệp'], detail:'Chiến lược nhân sự gắn với mục tiêu kinh doanh.'},
+      {stage:'Thực tập sinh HR', time:'0–6 tháng', salary:'2–4 triệu', titles:['HR Intern'], focus:['Sàng lọc CV','Sắp lịch phỏng vấn'], detail:'Hỗ trợ sàng lọc CV, sắp lịch phỏng vấn.',
+        cv:{company:'Tham khảo: Unilever/Nestlé (track People & Culture)', focus:['Kinh nghiệm tổ chức sự kiện/CLB sinh viên (thể hiện kỹ năng con người)','Hiểu biết cơ bản về quy trình tuyển dụng','Kỹ năng giao tiếp, sắp xếp công việc'], structure:['Học vấn','Hoạt động ngoại khoá (vai trò tổ chức, số người tham gia)','Kỹ năng mềm nổi bật','Chứng chỉ liên quan (nếu có)']}},
+      {stage:'HR Executive', time:'6–18 tháng', salary:'8–13 triệu', titles:['HR/TA Executive'], focus:['Tuyển dụng 1 mảng nhỏ','Onboarding nhân viên mới'], detail:'Phụ trách tuyển dụng hoặc C&B cho 1 mảng nhỏ.',
+        cv:{company:'Tham khảo: Suntory PepsiCo (track People & Culture)', focus:['Số lượng vị trí đã hỗ trợ tuyển dụng thành công','Kinh nghiệm onboarding nhân viên mới','Hiểu luật lao động cơ bản'], structure:['Tóm tắt định hướng nhân sự','Kinh nghiệm (số liệu tuyển dụng/onboarding)','Kỹ năng chuyên môn HR','Học vấn + chứng chỉ (nếu có)']}},
+      {stage:'HR Specialist', time:'2–4 năm', salary:'14–24 triệu', titles:['TA/C&B/L&D Specialist'], focus:['Chuyên sâu 1 mảng HR','Xây dựng quy trình tuyển dụng'], detail:'Chuyên sâu Talent Acquisition, C&B hoặc L&D.',
+        cv:{company:'Tham khảo: Tập đoàn đa quốc gia', focus:['Chuyên sâu 1 mảng (TA/C&B/L&D) với kết quả đo lường (thời gian tuyển giảm, tỷ lệ giữ chân tăng)','Xây dựng quy trình/công cụ tuyển dụng mới','Phân tích dữ liệu nhân sự cơ bản'], structure:['Tóm tắt chuyên môn HR sâu','Kinh nghiệm (nêu số liệu cải thiện)','Kỹ năng chuyên môn + công cụ HRIS','Chứng chỉ chuyên ngành (SHRM, PHR...)']}},
+      {stage:'HR Manager', time:'4–7 năm', salary:'26–45 triệu', titles:['HR Manager'], focus:['Xây dựng chính sách nhân sự','Quản lý team HR'], detail:'Xây dựng chính sách nhân sự, quản lý team HR.',
+        cv:{company:'Tham khảo: Tập đoàn lớn', focus:['Xây dựng chính sách nhân sự cho toàn công ty','Quy mô đội ngũ HR đã quản lý','Giải quyết xung đột/khủng hoảng nhân sự thực tế'], structure:['Tóm tắt vai trò quản lý nhân sự','Thành tích (chính sách, quy mô team)','Kỹ năng lãnh đạo & tư vấn','Học vấn/chứng chỉ quản lý nhân sự']}},
+      {stage:'HR Director', time:'7+ năm', salary:'50–90+ triệu', titles:['HR Director','CHRO'], focus:['Chiến lược nhân sự','Văn hoá doanh nghiệp'], detail:'Chiến lược nhân sự gắn với mục tiêu kinh doanh.',
+        cv:{company:'Tham khảo: Tập đoàn lớn/đa quốc gia', focus:['Chiến lược nhân sự gắn với mục tiêu kinh doanh dài hạn','Kinh nghiệm xây dựng văn hoá doanh nghiệp quy mô lớn','Tư vấn trực tiếp ban lãnh đạo'], structure:['Tóm tắt tầm nhìn chiến lược nhân sự','Thành tích cấp công ty','Kỹ năng lãnh đạo cấp cao','Học vấn nâng cao (MBA, chứng chỉ điều hành)']}},
     ]},
   {id:'kinhdoanh', name:'Kinh doanh & Bán hàng', icon:'📈', moods:['growth','explore'],
     desc:'Phát triển doanh số, chăm sóc khách hàng và mở rộng thị trường.',
     skills:['Giao tiếp thuyết phục','Chịu áp lực chỉ tiêu','Xây dựng mối quan hệ','Tư duy giải quyết vấn đề cho khách'],
     roadmap:[
-      {stage:'Thực tập sinh Sales', time:'0–6 tháng', salary:'2–5 triệu + hoa hồng', titles:['Sales Intern'], focus:['Học sản phẩm','Hỗ trợ CSKH'], detail:'Học sản phẩm, hỗ trợ chăm sóc khách hàng có sẵn.'},
-      {stage:'Sales Executive', time:'6–18 tháng', salary:'8–14 triệu + hoa hồng', titles:['Sales Executive'], focus:['Tự chốt đơn nhỏ','Đạt chỉ tiêu cá nhân'], detail:'Tự chốt đơn nhỏ, đạt chỉ tiêu cá nhân.'},
-      {stage:'Senior Sales', time:'2–4 năm', salary:'16–30 triệu + hoa hồng', titles:['Senior Sales','Key Account Exec'], focus:['Quản lý khách hàng lớn','Đào tạo sales mới'], detail:'Quản lý khách hàng lớn, đào tạo nhân sự mới.'},
-      {stage:'Sales Manager', time:'4–7 năm', salary:'28–50 triệu + thưởng', titles:['Sales Manager'], focus:['Quản lý team sales','Xây dựng chỉ tiêu khu vực'], detail:'Quản lý team, xây dựng chỉ tiêu khu vực.'},
-      {stage:'Head of Sales/BD', time:'7+ năm', salary:'55–100+ triệu', titles:['Head of Sales','Head of BD'], focus:['Chiến lược mở rộng thị trường','Đàm phán đối tác lớn'], detail:'Chiến lược mở rộng thị trường.'},
+      {stage:'Thực tập sinh Sales', time:'0–6 tháng', salary:'2–5 triệu + hoa hồng', titles:['Sales Intern'], focus:['Học sản phẩm','Hỗ trợ CSKH'], detail:'Học sản phẩm, hỗ trợ chăm sóc khách hàng có sẵn.',
+        cv:{company:'Tham khảo: Suntory PepsiCo, Vinamilk', focus:['Kinh nghiệm bán hàng/CSKH bán thời gian (dù nhỏ) là điểm cộng lớn','Kỹ năng giao tiếp, thuyết phục thể hiện qua hoạt động thực tế','Hiểu biết cơ bản về sản phẩm ngành FMCG/dịch vụ'], structure:['Học vấn','Kinh nghiệm bán hàng/CSKH (nếu có, nêu kết quả)','Kỹ năng giao tiếp & thuyết phục','Hoạt động ngoại khoá liên quan']}},
+      {stage:'Sales Executive', time:'6–18 tháng', salary:'8–14 triệu + hoa hồng', titles:['Sales Executive'], focus:['Tự chốt đơn nhỏ','Đạt chỉ tiêu cá nhân'], detail:'Tự chốt đơn nhỏ, đạt chỉ tiêu cá nhân.',
+        cv:{company:'Tham khảo: Suntory PepsiCo MT, Masan', focus:['Chỉ tiêu doanh số cá nhân đã đạt (nêu con số cụ thể)','Số lượng khách hàng đã chăm sóc/chốt','Kỹ năng đàm phán cơ bản'], structure:['Tóm tắt định hướng kinh doanh','Kinh nghiệm (chỉ tiêu đạt được, % hoàn thành)','Kỹ năng bán hàng & CSKH','Học vấn']}},
+      {stage:'Senior Sales', time:'2–4 năm', salary:'16–30 triệu + hoa hồng', titles:['Senior Sales','Key Account Exec'], focus:['Quản lý khách hàng lớn','Đào tạo sales mới'], detail:'Quản lý khách hàng lớn, đào tạo nhân sự mới.',
+        cv:{company:'Tham khảo: Vinamilk, Shopee', focus:['Quy mô khách hàng lớn/chiến lược đã quản lý','Kết quả tăng trưởng doanh số theo quý/năm','Kinh nghiệm đào tạo sales mới'], structure:['Tóm tắt chuyên môn bán hàng','Kinh nghiệm (số liệu tăng trưởng, quy mô khách hàng)','Kỹ năng đàm phán & quản lý quan hệ','Học vấn/chứng chỉ bán hàng']}},
+      {stage:'Sales Manager', time:'4–7 năm', salary:'28–50 triệu + thưởng', titles:['Sales Manager'], focus:['Quản lý team sales','Xây dựng chỉ tiêu khu vực'], detail:'Quản lý team, xây dựng chỉ tiêu khu vực.',
+        cv:{company:'Tham khảo: Tập đoàn FMCG/bán lẻ lớn', focus:['Quy mô đội sales và khu vực đã quản lý','Kết quả đạt/vượt chỉ tiêu khu vực','Kỹ năng xây dựng chiến lược bán hàng theo khu vực'], structure:['Tóm tắt vai trò quản lý kinh doanh','Thành tích (chỉ tiêu khu vực, quy mô đội ngũ)','Kỹ năng lãnh đạo đội sales','Học vấn/MBA (nếu có)']}},
+      {stage:'Head of Sales/BD', time:'7+ năm', salary:'55–100+ triệu', titles:['Head of Sales','Head of BD'], focus:['Chiến lược mở rộng thị trường','Đàm phán đối tác lớn'], detail:'Chiến lược mở rộng thị trường.',
+        cv:{company:'Tham khảo: Tập đoàn lớn', focus:['Chiến lược mở rộng thị trường đã triển khai thành công','Quy mô doanh thu chịu trách nhiệm','Đàm phán đối tác/kênh phân phối lớn'], structure:['Tóm tắt tầm nhìn kinh doanh','Thành tích cấp công ty (doanh thu, thị phần)','Kỹ năng lãnh đạo chiến lược','Học vấn nâng cao']}},
     ]},
   {id:'logistics', name:'Supply Chain & Logistics', icon:'🚚', moods:['stability','growth'],
     desc:'Vận hành chuỗi cung ứng: kho vận, vận chuyển, thu mua và tối ưu dòng chảy hàng hoá từ nhà máy đến tay người tiêu dùng.',
     skills:['Tư duy hệ thống','Công cụ quản lý kho vận (WMS/Excel)','Đàm phán với nhà cung cấp','Chịu áp lực deadline'],
     roadmap:[
-      {stage:'Thực tập sinh Logistics', time:'0–6 tháng', salary:'2–5 triệu', titles:['Logistics/SC Intern'], focus:['Theo dõi đơn hàng','Học quy trình kho vận'], detail:'Hỗ trợ theo dõi đơn hàng, làm quen hệ thống quản lý kho và quy trình xuất nhập.'},
-      {stage:'Fresher Coordinator', time:'6–18 tháng', salary:'9–14 triệu', titles:['Supply Chain Coordinator'], focus:['Lập kế hoạch vận chuyển nhỏ','Xử lý sự cố giao nhận'], detail:'Tự điều phối các lô hàng nhỏ, phối hợp nhà cung cấp và đơn vị vận chuyển.'},
-      {stage:'Supply Chain Analyst', time:'2–4 năm', salary:'16–26 triệu', titles:['SC Analyst','Procurement Executive'], focus:['Dự báo nhu cầu','Tối ưu tồn kho'], detail:'Phân tích dữ liệu chuỗi cung ứng, tối ưu tồn kho và chi phí vận chuyển.'},
-      {stage:'Supply Chain Manager', time:'4–7 năm', salary:'30–55 triệu', titles:['Supply Chain/Logistics Manager'], focus:['Quản lý vận hành kho/vùng','Đàm phán hợp đồng lớn'], detail:'Quản lý toàn bộ vận hành kho vận một khu vực, đàm phán với đối tác chiến lược.'},
-      {stage:'Head of Supply Chain', time:'7+ năm', salary:'55–100+ triệu', titles:['Head of Supply Chain','VP Operations'], focus:['Chiến lược chuỗi cung ứng toàn cầu','Quản lý rủi ro'], detail:'Định hướng chiến lược chuỗi cung ứng, quản lý rủi ro và mở rộng mạng lưới quốc tế.'},
+      {stage:'Thực tập sinh Logistics', time:'0–6 tháng', salary:'2–5 triệu', titles:['Logistics/SC Intern'], focus:['Theo dõi đơn hàng','Học quy trình kho vận'], detail:'Hỗ trợ theo dõi đơn hàng, làm quen hệ thống quản lý kho và quy trình xuất nhập.',
+        cv:{company:'Tham khảo: DHL Supply Chain, Maersk', focus:['Tinh thần "can-do attitude" — DHL/Maersk đề cao thái độ chủ động khi tuyển chương trình MT','Kỹ năng Excel & tư duy logic qua bài tập tình huống','Hiểu biết cơ bản về chuỗi cung ứng/kho vận'], structure:['Học vấn','Kỹ năng (Excel, tư duy hệ thống)','Hoạt động/dự án liên quan logistics (nếu có)','Chứng chỉ liên quan (nếu có)']}},
+      {stage:'Fresher Coordinator', time:'6–18 tháng', salary:'9–14 triệu', titles:['Supply Chain Coordinator'], focus:['Lập kế hoạch vận chuyển nhỏ','Xử lý sự cố giao nhận'], detail:'Tự điều phối các lô hàng nhỏ, phối hợp nhà cung cấp và đơn vị vận chuyển.',
+        cv:{company:'Tham khảo: DHL, Suntory PepsiCo (track Supply Chain)', focus:['Kinh nghiệm điều phối đơn hàng/lô hàng nhỏ (nêu số lượng cụ thể)','Khả năng xử lý sự cố giao nhận thực tế','Làm việc với hệ thống WMS/ERP cơ bản'], structure:['Tóm tắt định hướng chuỗi cung ứng','Kinh nghiệm (số liệu lô hàng/đơn hàng xử lý)','Kỹ năng công cụ (WMS, Excel nâng cao)','Học vấn + chứng chỉ']}},
+      {stage:'Supply Chain Analyst', time:'2–4 năm', salary:'16–26 triệu', titles:['SC Analyst','Procurement Executive'], focus:['Dự báo nhu cầu','Tối ưu tồn kho'], detail:'Phân tích dữ liệu chuỗi cung ứng, tối ưu tồn kho và chi phí vận chuyển.',
+        cv:{company:'Tham khảo: Nestlé (track Supply Chain), Gemadept', focus:['Kết quả tối ưu tồn kho/chi phí vận chuyển (nêu % cải thiện)','Kỹ năng dự báo nhu cầu bằng dữ liệu','Đánh giá và làm việc với nhà cung cấp'], structure:['Tóm tắt chuyên môn phân tích chuỗi cung ứng','Kinh nghiệm (số liệu tối ưu chi phí/tồn kho)','Kỹ năng phân tích dữ liệu & công cụ ERP','Chứng chỉ (Six Sigma, SCM nếu có)']}},
+      {stage:'Supply Chain Manager', time:'4–7 năm', salary:'30–55 triệu', titles:['Supply Chain/Logistics Manager'], focus:['Quản lý vận hành kho/vùng','Đàm phán hợp đồng lớn'], detail:'Quản lý toàn bộ vận hành kho vận một khu vực, đàm phán với đối tác chiến lược.',
+        cv:{company:'Tham khảo: DHL, Maersk', focus:['Quy mô kho vận/khu vực đã quản lý vận hành','Kết quả đàm phán hợp đồng với đối tác lớn','Quản lý đội ngũ vận hành đa chức năng'], structure:['Tóm tắt vai trò quản lý vận hành','Thành tích (quy mô vận hành, kết quả đàm phán)','Kỹ năng lãnh đạo vận hành','Học vấn/chứng chỉ quản lý chuỗi cung ứng']}},
+      {stage:'Head of Supply Chain', time:'7+ năm', salary:'55–100+ triệu', titles:['Head of Supply Chain','VP Operations'], focus:['Chiến lược chuỗi cung ứng toàn cầu','Quản lý rủi ro'], detail:'Định hướng chiến lược chuỗi cung ứng, quản lý rủi ro và mở rộng mạng lưới quốc tế.',
+        cv:{company:'Tham khảo: Tập đoàn logistics/sản xuất lớn', focus:['Chiến lược chuỗi cung ứng toàn cầu/đa quốc gia','Quản lý rủi ro chuỗi cung ứng ở cấp cao','Hợp tác với đối tác quốc tế'], structure:['Tóm tắt tầm nhìn chuỗi cung ứng','Thành tích cấp tập đoàn (quy mô mạng lưới, hiệu quả)','Kỹ năng lãnh đạo chiến lược toàn cầu','Học vấn nâng cao (MBA, chứng chỉ quốc tế)']}},
     ]},
 ];
 const FIELD_MAP = Object.fromEntries(FIELDS.map(f=>[f.id,f]));
@@ -904,12 +1016,12 @@ const PROGRAMS = [
 // ---- Podcast / video định hướng (chờ cập nhật link) ----
 // Ghi chú cho người chỉnh sửa: điền URL YouTube/Spotify thật vào trường "url" bên dưới khi có.
 const PODCASTS = [
-  {title:'Từ sinh viên năm 3 đến Junior Developer: hành trình 8 tháng', tag:'CNTT', dur:'24 phút', c1:'#3fc7c0', c2:'#9b6bff', url:''},
-  {title:'Chọn Marketing hay Sales? Góc nhìn từ 2 cựu MT Unilever', tag:'Marketing', dur:'31 phút', c1:'#ff6b4a', c2:'#ffc93c', url:''},
-  {title:'Big4 có thật sự "cân não" như lời đồn?', tag:'Tài chính', dur:'27 phút', c1:'#9b6bff', c2:'#ff5d8f', url:''},
-  {title:'Nhật ký thực tập sinh Logistics tại kho hàng đầu tiên', tag:'Supply Chain', dur:'19 phút', c1:'#3fc7c0', c2:'#ff6b4a', url:''},
-  {title:'HR không chỉ là tuyển dụng: một ngày làm việc thực tế', tag:'Nhân sự', dur:'22 phút', c1:'#ff5d8f', c2:'#ffc93c', url:''},
-  {title:'Từ đam mê vẽ vời đến Junior Designer tại một agency lớn', tag:'Thiết kế', dur:'26 phút', c1:'#ffc93c', c2:'#9b6bff', url:''},
+  {title:'Từ sinh viên năm 3 đến Junior Developer: hành trình 8 tháng', dur:'24 phút', c1:'#3fc7c0', c2:'#9b6bff', id:'GFDkNeq2EXg', start:0},
+  {title:'Chọn Marketing hay Sales? Góc nhìn từ 2 cựu MT Unilever', dur:'31 phút', c1:'#ff6b4a', c2:'#ffc93c', id:'SwPGYvhbe8k', start:0},
+  {title:'Big4 có thật sự "cân não" như lời đồn?', dur:'27 phút', c1:'#9b6bff', c2:'#ff5d8f', id:'gQ0T8iw7Sb8', start:0},
+  {title:'Nhật ký thực tập sinh Logistics tại kho hàng đầu tiên', dur:'19 phút', c1:'#3fc7c0', c2:'#ff6b4a', id:'g0UDpvD9R-U', start:0},
+  {title:'HR không chỉ là tuyển dụng: một ngày làm việc thực tế', dur:'22 phút', c1:'#ff5d8f', c2:'#ffc93c', id:'vgj0OjJde-U', start:0},
+  {title:'Từ đam mê vẽ vời đến Junior Designer tại một agency lớn', dur:'26 phút', c1:'#ffc93c', c2:'#9b6bff', id:'uAoZPsUmElM', start:93},
 ];
 
 // ---- Notifications ----
@@ -938,49 +1050,108 @@ const DISC_WEIGHTS = {
 
 const QUIZZES = {
   mbti: {
-    label:'MBTI nhanh', icon:'🧩', weights:MBTI_WEIGHTS,
+    label:'MBTI', icon:'🧩', weights:MBTI_WEIGHTS, populationIsReal:true,
     questions:[
+      // Hướng ngoại (E) / Hướng nội (I)
       {q:'Cuối tuần rảnh rỗi, bạn thường...', opts:[{t:'Tụ tập bạn bè, đi chơi', tag:'E'},{t:'Ở nhà nạp lại năng lượng một mình', tag:'I'}]},
+      {q:'Trong một bữa tiệc đông người, bạn...', opts:[{t:'Chủ động bắt chuyện với người lạ', tag:'E'},{t:'Chờ người khác chủ động bắt chuyện trước', tag:'I'}]},
+      {q:'Sau một ngày làm việc căng thẳng, bạn muốn...', opts:[{t:'Đi chơi cùng bạn bè để giải toả', tag:'E'},{t:'Ở một mình trong yên tĩnh để hồi phục', tag:'I'}]},
+      {q:'Khi làm việc nhóm, bạn thường...', opts:[{t:'Nói ra suy nghĩ ngay khi vừa nghĩ ra', tag:'E'},{t:'Suy nghĩ kỹ trong đầu trước rồi mới chia sẻ', tag:'I'}]},
+      {q:'Bạn cảm thấy tràn đầy năng lượng nhất khi...', opts:[{t:'Ở giữa đám đông, nhiều hoạt động', tag:'E'},{t:'Có không gian riêng, ít bị làm phiền', tag:'I'}]},
+      // Giác quan (S) / Trực giác (N)
       {q:'Khi học điều mới, bạn thích...', opts:[{t:'Ví dụ cụ thể, thực hành ngay', tag:'S'},{t:'Hiểu ý tưởng lớn, khả năng ứng dụng', tag:'N'}]},
+      {q:'Bạn tin tưởng vào...', opts:[{t:'Kinh nghiệm thực tế đã được kiểm chứng', tag:'S'},{t:'Trực giác và khả năng nhìn xa', tag:'N'}]},
+      {q:'Khi đọc một tài liệu, bạn chú ý đến...', opts:[{t:'Chi tiết, số liệu cụ thể', tag:'S'},{t:'Ý nghĩa tổng thể, mối liên hệ giữa các phần', tag:'N'}]},
+      {q:'Bạn thích công việc...', opts:[{t:'Có quy trình rõ ràng, làm theo từng bước', tag:'S'},{t:'Có thể sáng tạo, không bị gò bó theo khuôn mẫu', tag:'N'}]},
+      {q:'Khi mô tả một trải nghiệm, bạn thường...', opts:[{t:'Kể lại đúng những gì đã xảy ra', tag:'S'},{t:'Kể theo cách liên tưởng, thêm góc nhìn cá nhân', tag:'N'}]},
+      // Lý trí (T) / Cảm xúc (F)
       {q:'Khi ra quyết định, bạn ưu tiên...', opts:[{t:'Logic và dữ liệu', tag:'T'},{t:'Cảm xúc của người liên quan', tag:'F'}]},
+      {q:'Khi góp ý cho ai đó, bạn...', opts:[{t:'Thẳng thắn chỉ ra vấn đề, dù có thể mất lòng', tag:'T'},{t:'Chọn cách nói nhẹ nhàng để không làm tổn thương', tag:'F'}]},
+      {q:'Bạn đánh giá một quyết định là "đúng" khi...', opts:[{t:'Nó hợp lý và có căn cứ', tag:'T'},{t:'Nó khiến mọi người liên quan cảm thấy ổn', tag:'F'}]},
+      {q:'Trong tranh luận, bạn thường...', opts:[{t:'Tập trung vào ai đúng ai sai', tag:'T'},{t:'Tập trung giữ hoà khí giữa các bên', tag:'F'}]},
+      {q:'Khi đồng nghiệp gặp khó khăn, phản ứng đầu tiên của bạn là...', opts:[{t:'Đưa ra giải pháp cụ thể', tag:'T'},{t:'Hỏi han, đồng cảm trước đã', tag:'F'}]},
+      // Nguyên tắc (J) / Linh hoạt (P)
       {q:'Bạn thích lịch trình của mình...', opts:[{t:'Có kế hoạch rõ ràng', tag:'J'},{t:'Linh hoạt, tuỳ hứng', tag:'P'}]},
+      {q:'Trước một chuyến đi, bạn...', opts:[{t:'Lên kế hoạch chi tiết từng ngày', tag:'J'},{t:'Cứ đi rồi tính tiếp', tag:'P'}]},
+      {q:'Deadline với bạn là...', opts:[{t:'Động lực để hoàn thành sớm', tag:'J'},{t:'Áp lực nhưng vẫn có thể "nước đến chân mới nhảy"', tag:'P'}]},
+      {q:'Bàn làm việc/phòng của bạn thường...', opts:[{t:'Gọn gàng, mọi thứ có chỗ của nó', tag:'J'},{t:'Hơi bừa nhưng bạn biết thứ gì ở đâu', tag:'P'}]},
+      {q:'Khi có nhiều lựa chọn, bạn...', opts:[{t:'Muốn chốt nhanh để yên tâm', tag:'J'},{t:'Muốn giữ các lựa chọn mở càng lâu càng tốt', tag:'P'}]},
     ],
-    results:{
-      'E-S-T-J':{name:'Nhà Tổ Chức (ESTJ)', emoji:'📋', desc:'Bạn thực tế, quyết đoán và giỏi vận hành.', stat:'8.7', famous:[{name:'Henry Ford',note:'nhà sáng lập Ford Motor'},{name:'Judge Judy',note:'thẩm phán, host truyền hình'}]},
-      'I-N-T-J':{name:'Chiến Lược Gia (INTJ)', emoji:'♟️', desc:'Bạn tư duy hệ thống, thích giải quyết vấn đề phức tạp.', stat:'2.1', famous:[{name:'Elon Musk',note:'CEO Tesla & SpaceX'},{name:'Christopher Nolan',note:'đạo diễn phim'}]},
-      'E-N-F-P':{name:'Người Truyền Cảm Hứng (ENFP)', emoji:'✨', desc:'Bạn sáng tạo, giàu năng lượng và thích kết nối.', stat:'8.1', famous:[{name:'Robin Williams',note:'diễn viên, danh hài'}]},
-      'I-S-F-J':{name:'Người Chăm Sóc (ISFJ)', emoji:'🌿', desc:'Bạn tận tâm, đáng tin cậy.', stat:'13.8', famous:[{name:'Mother Teresa',note:'nhà từ thiện'},{name:'Roger Federer',note:'vận động viên quần vợt'}]},
-      'default':{name:'Người Khám Phá Đa Sắc', emoji:'🌈', desc:'Bạn có sự pha trộn thú vị giữa nhiều nhóm tính cách — điều đó cho bạn nhiều lựa chọn hơn bạn nghĩ.', stat:null, famous:[]},
-    }
+    profiles:{
+      ISTJ:{name:'Người Kỷ Luật', emoji:'📐', desc:'Bạn đáng tin cậy, có trách nhiệm và làm việc theo nguyên tắc rõ ràng.', famous:[{name:'Warren Buffett',note:'nhà đầu tư huyền thoại'},{name:'Angela Merkel',note:'cựu Thủ tướng Đức'}]},
+      ISFJ:{name:'Người Chăm Sóc', emoji:'🌿', desc:'Bạn tận tâm, đáng tin cậy và luôn đặt người khác lên hàng đầu.', famous:[{name:'Mother Teresa',note:'nhà từ thiện'},{name:'Roger Federer',note:'vận động viên quần vợt'}]},
+      INFJ:{name:'Người Lý Tưởng', emoji:'🕊️', desc:'Bạn giàu lý tưởng, thấu cảm sâu sắc và luôn tìm kiếm ý nghĩa trong công việc.', famous:[{name:'Martin Luther King Jr.',note:'nhà hoạt động nhân quyền'},{name:'Mahatma Gandhi',note:'nhà lãnh đạo phong trào độc lập'}]},
+      INTJ:{name:'Chiến Lược Gia', emoji:'♟️', desc:'Bạn tư duy hệ thống, thích giải quyết vấn đề phức tạp.', famous:[{name:'Elon Musk',note:'CEO Tesla & SpaceX'},{name:'Christopher Nolan',note:'đạo diễn phim'}]},
+      ISTP:{name:'Người Thực Chiến', emoji:'🔧', desc:'Bạn thực tế, giỏi xử lý tình huống và thích tự tay giải quyết vấn đề.', famous:[{name:'Steve Jobs',note:'đồng sáng lập Apple'}]},
+      ISFP:{name:'Người Nghệ Sĩ', emoji:'🎭', desc:'Bạn nhạy cảm, có gu thẩm mỹ riêng và sống theo giá trị cá nhân.', famous:[{name:'Michael Jackson',note:'nghệ sĩ âm nhạc'}]},
+      INFP:{name:'Người Mộng Mơ', emoji:'🌙', desc:'Bạn giàu cảm xúc, lý tưởng hoá và luôn tìm kiếm sự chân thật.', famous:[{name:'Vincent Van Gogh',note:'hoạ sĩ'},{name:'David Attenborough',note:'nhà tự nhiên học, host tài liệu'}]},
+      INTP:{name:'Nhà Tư Duy', emoji:'🧠', desc:'Bạn tò mò trí tuệ, thích phân tích và khám phá ý tưởng mới.', famous:[{name:'Albert Einstein',note:'nhà vật lý'}]},
+      ESTP:{name:'Người Táo Bạo', emoji:'⚡', desc:'Bạn năng động, thích hành động và không ngại rủi ro.', famous:[{name:'Franklin D. Roosevelt',note:'cựu Tổng thống Mỹ'},{name:'George S. Patton',note:'tướng quân đội'}]},
+      ESFP:{name:'Người Trình Diễn', emoji:'🎤', desc:'Bạn vui vẻ, tự nhiên và mang năng lượng tích cực đến mọi nơi.', famous:[{name:'Marilyn Monroe',note:'diễn viên'},{name:'Jackie Chan',note:'diễn viên, võ sĩ'}]},
+      ENFP:{name:'Người Truyền Cảm Hứng', emoji:'✨', desc:'Bạn sáng tạo, giàu năng lượng và thích kết nối.', famous:[{name:'Robin Williams',note:'diễn viên, danh hài'}]},
+      ENTP:{name:'Người Phản Biện', emoji:'💬', desc:'Bạn nhanh nhạy, thích tranh luận và luôn tìm góc nhìn mới.', famous:[{name:'Benjamin Franklin',note:'nhà khoa học, chính khách'},{name:'Barack Obama',note:'cựu Tổng thống Mỹ'}]},
+      ESTJ:{name:'Nhà Tổ Chức', emoji:'📋', desc:'Bạn thực tế, quyết đoán và giỏi vận hành.', famous:[{name:'Henry Ford',note:'nhà sáng lập Ford Motor'},{name:'Judge Judy',note:'thẩm phán, host truyền hình'}]},
+      ESFJ:{name:'Người Gắn Kết', emoji:'🤝', desc:'Bạn chu đáo, có trách nhiệm với cộng đồng và giỏi kết nối mọi người.', famous:[{name:'Taylor Swift',note:'ca sĩ, nhạc sĩ'}]},
+      ENFJ:{name:'Người Dẫn Dắt Cảm Xúc', emoji:'🌟', desc:'Bạn ấm áp, có sức ảnh hưởng và luôn muốn giúp người khác phát triển.', famous:[{name:'Oprah Winfrey',note:'host truyền hình, doanh nhân'}]},
+      ENTJ:{name:'Nhà Chỉ Huy', emoji:'🎯', desc:'Bạn quyết đoán, có tầm nhìn và giỏi tổ chức nguồn lực để đạt mục tiêu.', famous:[{name:'Margaret Thatcher',note:'cựu Thủ tướng Anh'},{name:'Ren Zhengfei',note:'nhà sáng lập Huawei'}]},
+    },
+    population:{ISTJ:11.6,ISFJ:13.8,INFJ:1.5,INTJ:2.1,ISTP:5.4,ISFP:8.8,INFP:4.4,INTP:3.3,ESTP:4.3,ESFP:8.5,ENFP:8.1,ENTP:3.2,ESTJ:8.7,ESFJ:12.3,ENFJ:2.5,ENTJ:1.8},
   },
   holland: {
-    label:'Holland nhanh', icon:'🔷', weights:HOLLAND_WEIGHTS,
+    label:'Holland (RIASEC)', icon:'🔷', weights:HOLLAND_WEIGHTS, populationIsReal:false,
     questions:[
-      {q:'Bạn thích làm việc với...', opts:[{t:'Máy móc, công cụ, hệ thống', tag:'R'},{t:'Ý tưởng, dữ liệu, phân tích', tag:'I'}]},
-      {q:'Một dự án lý tưởng với bạn là...', opts:[{t:'Thiết kế/sáng tạo điều mới', tag:'A'},{t:'Giúp đỡ, hướng dẫn người khác', tag:'S'}]},
+      {q:'Bạn thích làm việc với...', opts:[{t:'Máy móc, công cụ, hệ thống kỹ thuật', tag:'R'},{t:'Ý tưởng, dữ liệu, phân tích sâu', tag:'I'}]},
+      {q:'Một dự án lý tưởng với bạn là...', opts:[{t:'Thiết kế/sáng tạo điều hoàn toàn mới', tag:'A'},{t:'Giúp đỡ, hướng dẫn người khác', tag:'S'}]},
       {q:'Bạn thấy hào hứng khi...', opts:[{t:'Thuyết phục, dẫn dắt đội nhóm', tag:'E'},{t:'Sắp xếp, tổ chức quy trình gọn gàng', tag:'C'}]},
+      {q:'Khi rảnh, bạn thích...', opts:[{t:'Tự tay sửa chữa, lắp ráp một món đồ', tag:'R'},{t:'Vẽ, viết, hoặc tạo ra một sản phẩm sáng tạo', tag:'A'}]},
+      {q:'Bạn thấy thoả mãn hơn khi...', opts:[{t:'Tìm ra lời giải cho một bài toán khó', tag:'I'},{t:'Giúp một người bạn vượt qua khó khăn', tag:'S'}]},
+      {q:'Trong một dự án nhóm, bạn muốn...', opts:[{t:'Là người đứng ra thuyết phục đối tác/khách hàng', tag:'E'},{t:'Là người trực tiếp bắt tay vào làm ra sản phẩm', tag:'R'}]},
+      {q:'Bạn thích môi trường làm việc...', opts:[{t:'Tự do sáng tạo, ít khuôn khổ', tag:'A'},{t:'Có quy tắc, quy trình rõ ràng', tag:'C'}]},
+      {q:'Bạn muốn được nhớ đến vì...', opts:[{t:'Đã giúp đỡ, truyền cảm hứng cho ai đó', tag:'S'},{t:'Đã dẫn dắt một đội nhóm/dự án thành công', tag:'E'}]},
+      {q:'Bạn thích công việc...', opts:[{t:'Đòi hỏi phân tích, nghiên cứu sâu', tag:'I'},{t:'Đòi hỏi sự chính xác, tỉ mỉ theo quy trình', tag:'C'}]},
+      {q:'Bạn thấy công việc lý tưởng là...', opts:[{t:'Trực tiếp thao tác với máy móc/công cụ', tag:'R'},{t:'Nghiên cứu, phân tích thông tin', tag:'I'}]},
+      {q:'Bạn muốn dành thời gian để...', opts:[{t:'Tạo ra một tác phẩm/sản phẩm sáng tạo', tag:'A'},{t:'Hỗ trợ, chăm sóc người khác', tag:'S'}]},
+      {q:'Bạn cảm thấy tự tin nhất khi...', opts:[{t:'Đứng trước đám đông thuyết trình, thương lượng', tag:'E'},{t:'Sắp xếp số liệu, hồ sơ ngăn nắp', tag:'C'}]},
+      {q:'Bạn thích tạo ra sản phẩm...', opts:[{t:'Có tính ứng dụng, cầm nắm được', tag:'R'},{t:'Có tính thẩm mỹ, độc đáo', tag:'A'}]},
+      {q:'Bạn dành nhiều thời gian hơn cho...', opts:[{t:'Đọc, nghiên cứu để hiểu sâu một vấn đề', tag:'I'},{t:'Ở bên, lắng nghe câu chuyện của người khác', tag:'S'}]},
+      {q:'Bạn thích vai trò...', opts:[{t:'Đại diện đàm phán cho cả nhóm', tag:'E'},{t:'Trực tiếp vận hành, sửa chữa', tag:'R'}]},
+      {q:'Bạn cảm thấy gò bó khi...', opts:[{t:'Phải làm theo khuôn mẫu có sẵn', tag:'A'},{t:'Không có quy trình rõ ràng để theo', tag:'C'}]},
+      {q:'Thành công với bạn nghĩa là...', opts:[{t:'Người khác cảm thấy được giúp đỡ thật sự', tag:'S'},{t:'Dẫn dắt một tập thể đạt mục tiêu', tag:'E'}]},
+      {q:'Bạn thích dạng công việc...', opts:[{t:'Đặt câu hỏi và tìm câu trả lời', tag:'I'},{t:'Đảm bảo mọi thứ chính xác, đúng chuẩn', tag:'C'}]},
     ],
-    results:{
-      'I':{name:'Nhà Phân Tích', emoji:'🔬', desc:'Bạn tò mò và thích đào sâu vấn đề.', roles:'nhà khoa học, nhà phân tích dữ liệu, nhà nghiên cứu'},
-      'A':{name:'Người Sáng Tạo', emoji:'🎨', desc:'Bạn cần không gian thể hiện ý tưởng.', roles:'designer, content creator, đạo diễn sáng tạo'},
-      'S':{name:'Người Kết Nối', emoji:'🤲', desc:'Bạn hướng đến con người.', roles:'HR, giáo viên, tư vấn viên'},
-      'E':{name:'Người Dẫn Dắt', emoji:'🚀', desc:'Bạn có tố chất lãnh đạo và thuyết phục.', roles:'sales, quản lý kinh doanh, founder'},
-      'C':{name:'Người Tổ Chức', emoji:'🗂️', desc:'Bạn tỉ mỉ và đáng tin cậy.', roles:'kế toán, kiểm toán, vận hành'},
-      'R':{name:'Người Thực Hành', emoji:'🛠️', desc:'Bạn thích kết quả cụ thể, đo lường được.', roles:'kỹ sư, vận hành sản xuất, logistics'},
-    }
+    profiles:{
+      I:{name:'Nhà Phân Tích', emoji:'🔬', desc:'Bạn tò mò và thích đào sâu vấn đề.', roles:'nhà khoa học, nhà phân tích dữ liệu, nhà nghiên cứu'},
+      A:{name:'Người Sáng Tạo', emoji:'🎨', desc:'Bạn cần không gian thể hiện ý tưởng.', roles:'designer, content creator, đạo diễn sáng tạo'},
+      S:{name:'Người Kết Nối', emoji:'🤲', desc:'Bạn hướng đến con người.', roles:'HR, giáo viên, tư vấn viên'},
+      E:{name:'Người Dẫn Dắt', emoji:'🚀', desc:'Bạn có tố chất lãnh đạo và thuyết phục.', roles:'sales, quản lý kinh doanh, founder'},
+      C:{name:'Người Tổ Chức', emoji:'🗂️', desc:'Bạn tỉ mỉ và đáng tin cậy.', roles:'kế toán, kiểm toán, vận hành'},
+      R:{name:'Người Thực Hành', emoji:'🛠️', desc:'Bạn thích kết quả cụ thể, đo lường được.', roles:'kỹ sư, vận hành sản xuất, logistics'},
+    },
+    population:{R:14,I:19,A:11,S:21,E:16,C:19},
   },
   disc: {
-    label:'DISC nhanh', icon:'🔺', weights:DISC_WEIGHTS,
+    label:'DISC', icon:'🔺', weights:DISC_WEIGHTS, populationIsReal:false,
     questions:[
       {q:'Trong nhóm, bạn thường...', opts:[{t:'Chủ động chỉ đạo, muốn kết quả nhanh', tag:'D'},{t:'Truyền năng lượng, kết nối mọi người', tag:'I'}]},
+      {q:'Khi có vấn đề phát sinh, bạn...', opts:[{t:'Quyết đoán xử lý ngay, chấp nhận rủi ro', tag:'D'},{t:'Bình tĩnh, cân nhắc kỹ trước khi hành động', tag:'S'}]},
+      {q:'Bạn ưu tiên...', opts:[{t:'Kết quả nhanh, dù chưa hoàn hảo', tag:'D'},{t:'Sự chính xác, đúng quy trình', tag:'C'}]},
+      {q:'Trong một buổi họp, bạn thường...', opts:[{t:'Nói nhiều, tạo không khí sôi nổi', tag:'I'},{t:'Lắng nghe, giữ nhịp ổn định cho cuộc họp', tag:'S'}]},
+      {q:'Bạn thuyết phục người khác bằng...', opts:[{t:'Sự nhiệt tình, cảm xúc', tag:'I'},{t:'Số liệu, lập luận chặt chẽ', tag:'C'}]},
       {q:'Khi có xung đột, bạn...', opts:[{t:'Giữ hoà khí, kiên nhẫn lắng nghe', tag:'S'},{t:'Phân tích đúng-sai theo quy tắc', tag:'C'}]},
+      {q:'Khi bắt đầu dự án mới, bạn...', opts:[{t:'Lập tức bắt tay hành động, không chờ đợi', tag:'D'},{t:'Rủ mọi người cùng bàn bạc cho vui', tag:'I'}]},
+      {q:'Bạn thích được giao...', opts:[{t:'Quyền quyết định và tự chịu trách nhiệm', tag:'D'},{t:'Vai trò ổn định, ít thay đổi', tag:'S'}]},
+      {q:'Với deadline gấp, bạn...', opts:[{t:'Đẩy tốc độ lên, làm ngay không cần hoàn hảo', tag:'D'},{t:'Vẫn kiểm tra kỹ từng chi tiết trước khi nộp', tag:'C'}]},
+      {q:'Bạn nạp năng lượng bằng cách...', opts:[{t:'Gặp gỡ, trò chuyện với nhiều người', tag:'I'},{t:'Duy trì nếp sinh hoạt quen thuộc, ổn định', tag:'S'}]},
+      {q:'Khi trình bày ý tưởng, bạn...', opts:[{t:'Kể chuyện, tạo cảm xúc cho người nghe', tag:'I'},{t:'Trình bày logic, có số liệu minh chứng', tag:'C'}]},
+      {q:'Bạn khó chịu nhất khi...', opts:[{t:'Bị thúc ép thay đổi đột ngột', tag:'S'},{t:'Quy trình bị làm sai hoặc cẩu thả', tag:'C'}]},
     ],
-    results:{
-      'D':{name:'Người Quyết Đoán', emoji:'🎯', desc:'Bạn hướng đến mục tiêu và kết quả.'},
-      'I':{name:'Người Truyền Cảm Hứng', emoji:'🌟', desc:'Bạn giàu năng lượng, dễ tạo thiện cảm.'},
-      'S':{name:'Người Ổn Định', emoji:'🌊', desc:'Bạn đáng tin và kiên nhẫn.'},
-      'C':{name:'Người Chuẩn Mực', emoji:'📐', desc:'Bạn cẩn thận, coi trọng chất lượng.'},
-    }
+    profiles:{
+      D:{name:'Người Quyết Đoán', emoji:'🎯', desc:'Bạn hướng đến mục tiêu và kết quả.'},
+      I:{name:'Người Truyền Cảm Hứng', emoji:'🌟', desc:'Bạn giàu năng lượng, dễ tạo thiện cảm.'},
+      S:{name:'Người Ổn Định', emoji:'🌊', desc:'Bạn đáng tin và kiên nhẫn.'},
+      C:{name:'Người Chuẩn Mực', emoji:'📐', desc:'Bạn cẩn thận, coi trọng chất lượng.'},
+    },
+    population:{D:22,I:28,S:26,C:24},
   }
 };
 
@@ -1013,6 +1184,55 @@ function showToast(msg){
   toastTimer=setTimeout(()=>t.classList.remove('show'),2600);
 }
 
+// ============ TING SOUND + MASCOT POPUP ============
+let _audioCtx = null;
+function playTing(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  try{
+    if(!_audioCtx) _audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+    const ctx = _audioCtx;
+    if(ctx.state==='suspended') ctx.resume();
+    const now = ctx.currentTime;
+    const note = (freq, start, dur, vol)=>{
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0, now+start);
+      gain.gain.linearRampToValueAtTime(vol, now+start+0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now+start+dur);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(now+start); osc.stop(now+start+dur+0.05);
+    };
+    note(1318.51, 0, 0.32, 0.16);    // E6
+    note(1567.98, 0.1, 0.38, 0.13);  // G6
+  }catch(e){ /* Web Audio not available — fail silently */ }
+}
+function attemptTing(){
+  // Browsers often block audio until the user has interacted with the page at least once.
+  // Try immediately; if it's still blocked, retry silently on the very first interaction.
+  playTing();
+  if(_audioCtx && _audioCtx.state === 'suspended'){
+    const events = ['click','keydown','touchstart','scroll'];
+    const retry = ()=>{ playTing(); events.forEach(ev=>document.removeEventListener(ev, retry)); };
+    events.forEach(ev=>document.addEventListener(ev, retry, {once:true, passive:true}));
+  }
+}
+let _mascotTimer = null;
+function showMascotPopup(){
+  const pop = $('#mascotPopup');
+  const speech = $('#mascotSpeech');
+  pop.style.display = 'flex';
+  pop.classList.remove('show'); void pop.offsetWidth; pop.classList.add('show');
+  speech.style.display = 'block';
+  speech.classList.remove('fade-out');
+  clearTimeout(_mascotTimer);
+  _mascotTimer = setTimeout(()=>{
+    speech.classList.add('fade-out');
+    setTimeout(()=>{ speech.style.display='none'; }, 420);
+  }, 5000);
+}
+
 const io = new IntersectionObserver((entries)=>{
   entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
 },{threshold:0.12});
@@ -1026,7 +1246,7 @@ async function storageSet(key,val){
 }
 
 // ============ MOOD DECK ============
-const ORB_POS = [{top:'6%',left:'36%'},{top:'26%',left:'66%'},{top:'60%',left:'56%'},{top:'60%',left:'14%'},{top:'26%',left:'4%'}];
+const ORB_POS = [{top:'74%',left:'42%'},{top:'57%',left:'74%'},{top:'30%',left:'62%'},{top:'30%',left:'22%'},{top:'57%',left:'9%'}];
 function initOrbs(){
   const field = $('#orbField'); field.innerHTML='';
   MOODS.forEach((m,i)=>{
@@ -1108,6 +1328,20 @@ function renderJourney(){
           <div class="journey-titles">${r.titles.map(t=>`<span class="journey-title-chip">${t}</span>`).join('')}</div>
           <div class="journey-desc">${r.detail}</div>
           <div class="journey-focus"><b>Kỹ năng trọng tâm:</b> ${r.focus.join(' · ')}</div>
+          ${r.cv ? `
+          <div class="journey-cv">
+            <div class="journey-cv-head">📄 CV mẫu cho vị trí này <span>${r.cv.company}</span></div>
+            <div class="journey-cv-grid">
+              <div>
+                <b>Trọng tâm CV nên có</b>
+                <ul>${r.cv.focus.map(x=>`<li>${x}</li>`).join('')}</ul>
+              </div>
+              <div>
+                <b>Cấu trúc CV gợi ý</b>
+                <ol>${r.cv.structure.map(x=>`<li>${x}</li>`).join('')}</ol>
+              </div>
+            </div>
+          </div>` : ''}
           <button class="journey-mark-btn" data-i="${i}">📍 Đánh dấu tôi đang ở đây</button>
         </div>
       </div>`;
@@ -1227,6 +1461,16 @@ function computeFieldScores(quizKey, answers){
   answers.forEach(tag=>{ const w=weights[tag]; if(w) Object.entries(w).forEach(([fid,val])=>scores[fid]+=val); });
   return scores;
 }
+function computeQuizCode(quizKey, answers){
+  const freq={}; answers.forEach(a=>freq[a]=(freq[a]||0)+1);
+  if(quizKey==='mbti'){
+    return (( (freq.E||0) >= (freq.I||0) ) ? 'E':'I')
+         + (( (freq.S||0) >= (freq.N||0) ) ? 'S':'N')
+         + (( (freq.T||0) >= (freq.F||0) ) ? 'T':'F')
+         + (( (freq.J||0) >= (freq.P||0) ) ? 'J':'P');
+  }
+  return Object.keys(freq).sort((a,b)=>freq[b]-freq[a])[0];
+}
 function renderQuiz(){
   const box = $('#quizBox');
   const quiz = QUIZZES[state.quiz.key];
@@ -1237,25 +1481,35 @@ function renderQuiz(){
     const ranked = FIELDS.map(f=>({f, score:scores[f.id]})).sort((a,b)=>b.score-a.score);
     const maxScore = Math.max(...ranked.map(r=>r.score),1);
     const topField = ranked[0].f;
-    let typeResult;
-    if(state.quiz.key==='mbti'){ typeResult = quiz.results[answers.join('-')] || quiz.results['default']; }
-    else { const freq={}; answers.forEach(a=>freq[a]=(freq[a]||0)+1); const top=Object.keys(freq).sort((a,b)=>freq[b]-freq[a])[0]; typeResult = quiz.results[top] || Object.values(quiz.results)[0]; }
+    const code = computeQuizCode(state.quiz.key, answers);
+    const typeResult = quiz.profiles[code];
+    const myPct = quiz.population[code];
     box.innerHTML = `
       <div class="quiz-result">
         <div class="r-emoji">${typeResult.emoji}</div>
-        <h3>${typeResult.name}</h3>
+        <h3>${typeResult.name} <span style="font-size:15px;color:var(--lo-2);font-family:var(--mono);">(${code})</span></h3>
         <p>${typeResult.desc} Ngành phù hợp nhất theo câu trả lời của bạn: <b>${topField.name}</b> — vị trí nên thử: ${topField.roadmap[0].titles.join(', ')}.</p>
-        ${typeResult.stat ? `<div class="quiz-stat">📊 Khoảng <b>${typeResult.stat}%</b> dân số nói chung được xếp vào nhóm tính cách này <span style="color:var(--lo-2);font-weight:400;">(theo khảo sát MBTI Institute/CPP — không phải số liệu riêng của Plan)</span>.</div>` : ''}
         ${typeResult.roles ? `<div class="quiz-stat">💼 Vai trò tiêu biểu của nhóm này: ${typeResult.roles}.</div>` : ''}
         ${typeResult.famous && typeResult.famous.length ? `
         <div class="quiz-famous">
           <span class="quiz-famous-label">🌟 Người nổi tiếng thường được xếp vào nhóm này <i>(theo các bài viết phổ biến về MBTI, mang tính tham khảo, không phải xác nhận chính thức)</i>:</span>
           <div class="quiz-famous-list">${typeResult.famous.map(f=>`<span class="chip">${f.name} · ${f.note}</span>`).join('')}</div>
         </div>` : ''}
+        <div class="pop-chart">
+          <div class="quiz-famous-label">📊 Bao nhiêu người có cùng nhóm với bạn? <i>${quiz.populationIsReal ? '(theo khảo sát MBTI Institute/CPP trên dân số nói chung - không phải số liệu riêng của Planet)' : '(ước tính minh hoạ, chưa có khảo sát chính thức công khai cho khung này)'}</i></div>
+          <div id="popChartBars"></div>
+        </div>
+        <div class="match-bars-label">🧭 Mức độ phù hợp với từng ngành:</div>
         <div class="match-bars" id="matchBars"></div>
         <div class="quiz-cta-row" id="quizCtaRow"></div>
         <button class="quiz-restart" onclick="restartQuiz()">Làm lại bài test</button>
       </div>`;
+    const popBox = $('#popChartBars');
+    Object.entries(quiz.population).sort((a,b)=>b[1]-a[1]).forEach(([c,pct])=>{
+      const row = el('div','pop-bar-row'+(c===code?' me':''));
+      row.innerHTML = `<div class="pop-bar-label"><span>${c}${c===code?' ← bạn ở đây':''}</span><b>${pct}%</b></div><div class="pop-bar-track"><div class="pop-bar-fill" style="width:${pct*100/Math.max(...Object.values(quiz.population))}%"></div></div>`;
+      popBox.appendChild(row);
+    });
     const barsBox = $('#matchBars');
     ranked.forEach(r=>{
       const pct = Math.round((r.score/maxScore)*100);
@@ -1279,6 +1533,7 @@ function renderQuiz(){
   const q = quiz.questions[qIndex];
   box.innerHTML = `
     <div class="quiz-progress"><div class="quiz-progress-bar" style="width:${(qIndex/quiz.questions.length)*100}%"></div></div>
+    <div class="quiz-q-count">Câu ${qIndex+1}/${quiz.questions.length}</div>
     <div class="quiz-q">${q.q}</div>
     <div class="quiz-opts">${q.opts.map((o,i)=>`<button class="quiz-opt" data-i="${i}">${o.t}</button>`).join('')}</div>`;
   $all('.quiz-opt',box).forEach(btn=>{
@@ -1354,11 +1609,10 @@ function renderPodcasts(){
         <span class="pod-dur">${p.dur}</span>
       </div>
       <div class="pod-body">
-        <span class="pod-tag">${p.tag}</span>
         <h4>${p.title}</h4>
-        <span>${p.url ? 'Bấm để xem' : 'Sắp cập nhật link'}</span>
+        <span>Bấm để xem</span>
       </div>`;
-    card.onclick=()=>{ if(p.url) window.open(p.url,'_blank'); else showToast('Video này sẽ được cập nhật link sớm 🎬'); };
+    card.onclick=()=>openVideoModal(p);
     grid.appendChild(card);
   });
   observeReveals(grid);
@@ -1414,7 +1668,7 @@ If the user types "General Analysis" or "Phân tích tổng quát", give a full 
 
 IMPORTANT: Always respond in Vietnamese (tiếng Việt), in a warm, encouraging tone suited to a Gen Z university student. Keep each response reasonably concise (under ~180 words) since this is a chat widget. Begin the very first message with a first question.`;
 
-const QUICK_SYSTEM_PROMPT = `Bạn là Bạn AI Mentor Nghề Nghiệp (phát triển trên nền tảng Gemini) — trợ lý ảo thân thiện của nền tảng hướng nghiệp "Plan" dành cho sinh viên Gen Z Việt Nam. Nền tảng có: Bản đồ hành trình sự nghiệp (7 ngành: CNTT, Marketing, Tài chính-Ngân hàng, Thiết kế, Nhân sự, Kinh doanh, Supply Chain & Logistics), Trắc nghiệm tự đánh giá (MBTI/Holland/DISC rút gọn), khu vực AI Tư Vấn (doanh nghiệp đầu ngành + kho chương trình Internship/Management Trainee), và Podcast định hướng. Trả lời ngắn gọn, gần gũi, đúng trọng tâm, bằng tiếng Việt, gợi ý sinh viên dùng đúng mục trên web khi phù hợp. Nếu không chắc thông tin cụ thể (deadline, số liệu thật), hãy nói rõ nên kiểm tra trang tuyển dụng chính thức.`;
+const QUICK_SYSTEM_PROMPT = `Bạn là Mentor AI — trợ lý ảo thân thiện của nền tảng hướng nghiệp "Planet" dành cho sinh viên Gen Z Việt Nam. Nền tảng có: Bản đồ hành trình sự nghiệp (7 ngành: CNTT, Marketing, Tài chính-Ngân hàng, Thiết kế, Nhân sự, Kinh doanh, Supply Chain & Logistics), Trắc nghiệm tự đánh giá (MBTI/Holland/DISC rút gọn), khu vực AI Tư Vấn (doanh nghiệp đầu ngành + kho chương trình Internship/Management Trainee), và Podcast định hướng. Trả lời ngắn gọn, gần gũi, đúng trọng tâm, bằng tiếng Việt, gợi ý sinh viên dùng đúng mục trên web khi phù hợp. Nếu không chắc thông tin cụ thể (deadline, số liệu thật), hãy nói rõ nên kiểm tra trang tuyển dụng chính thức.`;
 
 const QUICK_PROMPTS = ['Ngành nào hợp với người hướng nội?','Chuẩn bị CV thế nào cho MT?','So sánh CNTT và Marketing','Mình nên bắt đầu từ đâu?'];
 
@@ -1423,20 +1677,22 @@ function initAdvisor(){
   $('#advModeDeep').onclick = ()=>switchAdvisorMode('deep');
   $('#advSend').onclick = sendAdvisorMessage;
   $('#advInput').addEventListener('keydown',(e)=>{ if(e.key==='Enter') sendAdvisorMessage(); });
-  $('#chatFab').onclick = ()=>{ document.getElementById('advisor').scrollIntoView({behavior:'smooth'}); setTimeout(()=>$('#advInput').focus(),500); };
+  const openAdvisor = ()=>{
+    playTing();
+    showMascotPopup();
+    document.getElementById('advisor').scrollIntoView({behavior:'smooth'});
+    setTimeout(()=>$('#advInput').focus(),500);
+  };
+  $('#mascotPopup').onclick = openAdvisor;
   const qp = $('#advQuickPrompts'); qp.innerHTML='';
   QUICK_PROMPTS.forEach(p=>{
     const b = el('button','adv-quick-prompt', p);
     b.onclick=()=>{ $('#advInput').value=p; sendAdvisorMessage(); };
     qp.appendChild(b);
   });
-  state.advisor.quick.push({
-    role: 'assistant', 
-    content: 'Chào bạn 👋 Mình là Bạn AI Mentor Nghề Nghiệp (Gemini) của Plan. Hãy chia sẻ với mình về định hướng công việc, cách viết CV, hay bất cứ câu hỏi nào bạn đang băn khoăn nhé!'
-  });
+  state.advisor.quick.push({role:'assistant', content:'Chào bạn 👋 Mình là Mentor AI của Planet. Hỏi mình về chọn ngành, chuẩn bị CV cho MT, hay bất cứ điều gì về web này nhé!'});
   renderAdvisorChat();
 }
-
 function switchAdvisorMode(mode){
   state.advisor.mode = mode;
   $('#advModeQuick').classList.toggle('active', mode==='quick');
@@ -1450,7 +1706,6 @@ function switchAdvisorMode(mode){
     kickoffDeepAnalysis();
   }
 }
-
 function renderAdvisorChat(){
   const body = $('#advBody');
   body.innerHTML='';
@@ -1466,72 +1721,66 @@ function renderAdvisorChat(){
   }
   body.scrollTop = body.scrollHeight;
 }
-
-// 1. Hàm gọi đến Vercel Serverless API (/api/chat)
-async function callGeminiMentor(systemPrompt, messages) {
-  const res = await fetch('/api/chat', {
+async function callGeminiApi(prompt) {
+  const response = await fetch('/api/chat', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      systemPrompt: systemPrompt,
-      messages: messages
-    })
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ prompt }),
   });
 
-  const data = await res.json();
-  if (!res.ok || data.error) {
-    throw new Error(data.error || 'Lỗi kết nối API.');
+  if (!response.ok) {
+    throw new Error('Lỗi kết nối API');
   }
+
+  const data = await response.json();
   return data.reply;
 }
-
-// 2. Phân tích sâu
 async function kickoffDeepAnalysis(){
   state.advisor.busy = true; 
   renderAdvisorChat();
   try{
-    // Đã sửa thành callGeminiMentor
-    const reply = await callGeminiMentor(DEEP_SYSTEM_PROMPT, [{role:'user', content:'Hãy bắt đầu buổi phân tích tính cách của tôi.'}]);
+    const prompt = `${DEEP_SYSTEM_PROMPT}\n\nNgười dùng: Bắt đầu buổi phân tích tính cách của tôi.`;
+    const reply = await callGeminiApi(prompt);
     state.advisor.deep.push({role:'assistant', content:reply});
   }catch(e){
-    console.error('Gemini API Error:', e);
-    state.advisor.deep.push({
-      role:'assistant', 
-      content:'Hiện tại mình chưa kết nối được với máy chủ AI. Bạn hãy kiểm tra lại biến GEMINI_API_KEY trên Vercel hoặc thử lại sau vài giây nhé!'
-    });
+    console.error('API error', e);
+    state.advisor.deep.push({role:'assistant', content:'Không thể kết nối tới Bạn AI Mentor Nghề Nghiệp.'});
   }
   state.advisor.busy = false; 
   renderAdvisorChat();
 }
 
-// 3. Gửi tin nhắn chat nhanh
 async function sendAdvisorMessage(){
   const input = $('#advInput');
   const text = input.value.trim();
   if(!text || state.advisor.busy) return;
+  
   const mode = state.advisor.mode;
   state.advisor[mode].push({role:'user', content:text});
   input.value='';
   state.advisor.busy = true;
   renderAdvisorChat();
   $('#advSend').disabled = true;
+
   try{
     const systemPrompt = mode==='deep' ? DEEP_SYSTEM_PROMPT : QUICK_SYSTEM_PROMPT;
-    // Đã sửa thành callGeminiMentor
-    const reply = await callGeminiMentor(systemPrompt, state.advisor[mode]);
+    // Ghép lịch sử trò chuyện thành 1 chuỗi prompt hoàn chỉnh y như cách làm cũ
+    const conversationHistory = state.advisor[mode].map(m => `${m.role === 'user' ? 'Người dùng' : 'AI'}: ${m.content}`).join('\n');
+    const fullPrompt = `${systemPrompt}\n\nLịch sử trò chuyện:\n${conversationHistory}\n\nAI:`;
+
+    const reply = await callGeminiApi(fullPrompt);
     state.advisor[mode].push({role:'assistant', content:reply});
   }catch(e){
-    console.error('Gemini API Error:', e);
-    state.advisor[mode].push({
-      role:'assistant', 
-      content:'Hiện tại mình chưa kết nối được với máy chủ AI. Bạn hãy kiểm tra lại biến GEMINI_API_KEY trên Vercel hoặc thử lại sau ít phút nhé!'
-    });
+    console.error('API error', e);
+    state.advisor[mode].push({role:'assistant', content:'Không thể kết nối tới Bạn AI Mentor Nghề Nghiệp.'});
   }
+  
   state.advisor.busy = false;
   $('#advSend').disabled = false;
   renderAdvisorChat();
 }
-
 // ============ SECTION DOT NAV (scrollspy) ============
 function initDotNav(){
   const dots = $all('#dotNav button');
@@ -1585,6 +1834,23 @@ function initRippleBackground(){
   requestAnimationFrame(tick);
 }
 
+// ============ VIDEO MODAL ============
+function openVideoModal(p){
+  const iframe = $('#videoModalIframe');
+  const startParam = p.start ? `&start=${p.start}` : '';
+  iframe.src = `https://www.youtube.com/embed/${p.id}?autoplay=1&rel=0${startParam}`;
+  $('#videoModalOverlay').classList.add('show');
+}
+function closeVideoModal(){
+  $('#videoModalOverlay').classList.remove('show');
+  $('#videoModalIframe').src = '';
+}
+function initVideoModal(){
+  $('#videoModalClose').onclick = closeVideoModal;
+  $('#videoModalOverlay').addEventListener('click',(e)=>{ if(e.target.id==='videoModalOverlay') closeVideoModal(); });
+  document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeVideoModal(); });
+}
+
 function initMisc(){
   $('#ctaStart').onclick = openOnboarding;
   $('#heroStartBtn').onclick = openOnboarding;
@@ -1611,6 +1877,7 @@ function initMisc(){
 
 // ============ INIT ============
 async function init(){
+  initVideoModal();
   initRippleBackground();
   initOrbs();
   renderFieldTabs();
@@ -1629,6 +1896,7 @@ async function init(){
   observeReveals();
 
   const savedProfile = await storageGet('profile');
+  setTimeout(()=>{ showMascotPopup(); attemptTing(); }, 1200);
   if(savedProfile){
     state.profile = savedProfile; state.activeField = savedProfile.fieldId; renderFieldTabs(); renderJourney();
   } else {
